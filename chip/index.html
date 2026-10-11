@@ -334,10 +334,14 @@ function smoothstep(a, b, x) {
 const cloudEls = Array.from(document.querySelectorAll('#clouds .cloud'));
 const cloudRanges = [[0.02, 0.42], [0.08, 0.48], [0.16, 0.58], [0.22, 0.62]]; // staggered fade-in windows, as a fraction of hero scroll
 
+let heroDismissed = false;
 function heroTick() {
   const y = window.scrollY;
   const h = heroPx();
-  const f = Math.min(1, Math.max(0, y / (h * 0.85))); // fully gone a bit before the hero's own height
+  const rawF = Math.min(1, Math.max(0, y / (h * 0.85))); // fully gone a bit before the hero's own height
+  if (rawF >= 1) heroDismissed = true;
+  // Once the intro has fully played once, it's gone for good — scrolling back up never brings it back
+  const f = heroDismissed ? 1 : rawF;
 
   // Clouds drift in first, each on its own slightly offset timing, covering the image...
   cloudEls.forEach((el, i) => {
@@ -350,7 +354,7 @@ function heroTick() {
   // ...then the whole scene (image + clouds) dissolves away once the clouds have mostly gathered
   const sceneFade = smoothstep(0.45, 1, f);
   heroEl.style.opacity = String(1 - sceneFade);
-  heroEl.style.pointerEvents = f >= 1 ? 'none' : '';
+  heroEl.style.pointerEvents = (f >= 1 || heroDismissed) ? 'none' : '';
 
   requestAnimationFrame(heroTick);
 }
