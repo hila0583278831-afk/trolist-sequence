@@ -42,6 +42,8 @@
   .bar { left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.08); }
   .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent2), var(--accent)); transform-origin: right; margin-right: 0; margin-left: auto; }
 
+  .bgload { left: 0; right: 0; top: 0; height: 2px; background: transparent; }
+  .bgload i { display: block; height: 100%; width: 0; background: rgba(255,255,255,.35); transition: width .3s linear; }
   .hint { bottom: 28px; left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .12em; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 8px; transition: opacity .5s; }
   .hint .mouse { width: 20px; height: 32px; border: 1.5px solid var(--muted); border-radius: 12px; position: relative; }
   .hint .mouse::after { content: ""; position: absolute; top: 6px; left: 50%; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--fg); animation: wheel 1.6s ease-in-out infinite; }
@@ -75,13 +77,14 @@
 <div class="hud counter" dir="ltr" aria-hidden="true"><b id="cur">01</b> / <span id="tot">08</span></div>
 <nav class="hud dots" id="dots" aria-label="שלבים"></nav>
 <div class="hud bar"><i id="prog"></i></div>
+<div class="hud bgload" aria-hidden="true"><i id="bgload"></i></div>
 <div class="hud hint" id="hint"><span class="mouse"></span>גללו</div>
 
 <div id="track"></div>
 
 <script>
 /* ---------- Config (filled at build time) ---------- */
-const ASSET_VERSION = 3;        // bump when frames change, so browsers don't reuse old cached images
+const ASSET_VERSION = 4;        // bump when frames change, so browsers don't reuse old cached images
 const STAGES = [{"dir": "frames/s1", "count": 120}, {"dir": "frames/s2", "count": 121}, {"dir": "frames/s3", "count": 120}, {"dir": "frames/s4", "count": 121}, {"dir": "frames/s5", "count": 120}, {"dir": "frames/s6", "count": 120}, {"dir": "frames/s7", "count": 120}, {"dir": "frames/s8", "count": 121}];      // [{dir, count}]
 const SCROLL_PER_STAGE = 1.6;   // viewport heights of scrolling per video
 const EASE = 0.14;              // smoothing (0..1), lower = smoother/slower
@@ -130,19 +133,26 @@ function loadOne(f) {
   });
 }
 
-async function preloadAll(onProgress) {
-  // Order: first frame of every stage first (instant jumps), then everything in sequence.
-  const order = [...stageStart.map(i => frames[i]), ...frames.filter((_, i) => !stageStart.includes(i))];
-  let loaded = 0, next = 0;
-  const CONC = 10;
+async function preloadAll(onProgress, onFirstStage) {
+  // Order: all of stage 1, then the first frame of every stage, then everything else in sequence.
+  const s1 = frames.slice(0, STAGES[0].count);
+  const firsts = stageStart.slice(1).map(i => frames[i]);
+  const seen = new Set([...s1, ...firsts]);
+  const order = [...s1, ...firsts, ...frames.filter(f => !seen.has(f))];
+  const gate = s1.length + firsts.length;
+  let loaded = 0, next = 0, opened = false;
+  const CONC = 16;
   async function worker() {
     while (next < order.length) {
       const f = order[next++];
-      await loadOne(f);
-      onProgress(++loaded / order.length);
+      if (!f.ready) await loadOne(f);
+      loaded++;
+      onProgress(loaded / order.length);
+      if (!opened && loaded >= gate) { opened = true; onFirstStage(); }
     }
   }
   await Promise.all(Array.from({ length: CONC }, worker));
+  if (!opened) onFirstStage();
 }
 
 /* ---------- Drawing ---------- */
@@ -273,14 +283,25 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   // Show the first frame as soon as it exists
   await loadOne(frames[0]);
   render(0);
+  const bgEl = document.getElementById('bgload');
+  let started = false;
   await preloadAll(p => {
     const v = Math.round(p * 100);
-    pctEl.textContent = v + '%';
-    pbar.style.width = v + '%';
+    if (!started) {
+      const gateShare = (STAGES[0].count + STAGES.length - 1) / TOTAL;
+      const g = Math.min(100, Math.round((p / gateShare) * 100));
+      pctEl.textContent = g + '%';
+      pbar.style.width = g + '%';
+    } else {
+      bgEl.style.width = v + '%';
+      if (v >= 100) bgEl.parentElement.hidden = true;
+    }
+  }, () => {
+    started = true;
+    document.getElementById('loader').classList.add('done');
+    lastDrawn = -1;
+    requestAnimationFrame(tick);
   });
-  document.getElementById('loader').classList.add('done');
-  lastDrawn = -1;
-  requestAnimationFrame(tick);
 })();
 </script>
 </body>
