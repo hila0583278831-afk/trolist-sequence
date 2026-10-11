@@ -81,6 +81,7 @@
 
 <script>
 /* ---------- Config (filled at build time) ---------- */
+const ASSET_VERSION = 3;        // bump when frames change, so browsers don't reuse old cached images
 const STAGES = [{"dir": "frames/s1", "count": 120}, {"dir": "frames/s2", "count": 121}, {"dir": "frames/s3", "count": 120}, {"dir": "frames/s4", "count": 121}, {"dir": "frames/s5", "count": 120}, {"dir": "frames/s6", "count": 120}, {"dir": "frames/s7", "count": 120}, {"dir": "frames/s8", "count": 121}];      // [{dir, count}]
 const SCROLL_PER_STAGE = 1.6;   // viewport heights of scrolling per video
 const EASE = 0.14;              // smoothing (0..1), lower = smoother/slower
@@ -94,7 +95,7 @@ const stageStart = [];      // index of first frame per stage
 STAGES.forEach((s, si) => {
   stageStart.push(frames.length);
   for (let i = 1; i <= s.count; i++) {
-    frames.push({ src: `${s.dir}/${String(i).padStart(4, '0')}.webp`, img: null, ready: false, stage: si });
+    frames.push({ src: `${s.dir}/${String(i).padStart(4, '0')}.webp?v=${ASSET_VERSION}`, img: null, ready: false, stage: si });
   }
 });
 const TOTAL = frames.length;
@@ -120,7 +121,9 @@ function loadOne(f) {
     img.decoding = 'async';
     img.onload = () => {
       const done = () => { f.img = img; f.ready = true; res(); };
-      img.decode ? img.decode().then(done, done) : done();
+      // decode() can stall in background tabs; never let it block loading
+      if (img.decode) Promise.race([img.decode(), new Promise(r => setTimeout(r, 1500))]).then(done, done);
+      else done();
     };
     img.onerror = () => res();
     img.src = f.src;
