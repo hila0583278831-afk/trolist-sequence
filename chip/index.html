@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TROLIST Chip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080c;
+    --fg: #f4f5f8;
+    --muted: rgba(244,245,248,.55);
+    --accent: #6d4cff;
+    --accent2: #3b5bff;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #07080c; } }
+  :root[data-theme="dark"] { --bg: #07080c; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--fg); font-family: "Heebo", system-ui, sans-serif; }
+  body { overscroll-behavior: none; }
+
+  /* The scroll track: only gives the page height. Nothing in it is visible. */
+  #track { position: relative; width: 100%; }
+
+  /* The one fixed screen everything plays on */
+  #stage { position: fixed; inset: 0; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; }
+  #screen { display: block; width: 100%; height: 100%; }
+
+  /* HUD */
+  .hud { position: fixed; z-index: 5; pointer-events: none; }
+  .counter { top: 24px; right: 24px; direction: ltr; font-weight: 300; letter-spacing: .08em; font-size: 14px; color: var(--muted); }
+  .counter b { color: var(--fg); font-weight: 600; font-size: 22px; margin-left: 4px; font-variant-numeric: tabular-nums; }
+
+  .dots { top: 50%; left: 22px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; pointer-events: auto; }
+  .dots button { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); background: transparent; cursor: pointer; transition: transform .3s, background .3s, border-color .3s; padding: 0; }
+  .dots button.on { background: var(--fg); border-color: var(--fg); transform: scale(1.35); }
+  .dots button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .bar { left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.08); }
+  .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent2), var(--accent)); transform-origin: right; margin-right: 0; margin-left: auto; }
+
+  .bgload { left: 0; right: 0; top: 0; height: 2px; background: transparent; }
+  .bgload i { display: block; height: 100%; width: 0; background: rgba(255,255,255,.35); transition: width .3s linear; }
+  .hint { bottom: 28px; left: 50%; transform: translateX(-50%); font-size: 13px; letter-spacing: .12em; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 8px; transition: opacity .5s; }
+  .hint .mouse { width: 20px; height: 32px; border: 1.5px solid var(--muted); border-radius: 12px; position: relative; }
+  .hint .mouse::after { content: ""; position: absolute; top: 6px; left: 50%; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--fg); animation: wheel 1.6s ease-in-out infinite; }
+  @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+
+  /* Loader */
+  #loader { position: fixed; inset: 0; z-index: 10; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; transition: opacity .6s ease; }
+  #loader.done { opacity: 0; pointer-events: none; }
+  #loader .pct { font-size: 44px; font-weight: 300; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  #loader .line { width: min(260px, 70vw); height: 2px; background: rgba(255,255,255,.1); overflow: hidden; border-radius: 2px; }
+  #loader .line i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width .15s linear; }
+  #loader .lbl { font-size: 13px; color: var(--muted); letter-spacing: .1em; }
+
+  .counter, .dots { display: none !important; }
+  @media (max-width: 600px) {
+    .counter { top: 16px; right: 16px; }
+    .dots { left: 12px; gap: 11px; }
+    .dots button { width: 8px; height: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hint .mouse::after { animation: none; } }
+</style>
+</head>
+<body>
+<div id="loader" role="status" aria-live="polite">
+  <div class="pct" id="pct">0%</div>
+  <div class="line"><i id="pbar"></i></div>
+  <div class="lbl">טוען את הרצף…</div>
+</div>
+
+<div id="stage"><canvas id="screen" aria-label="רצף תמונות"></canvas></div>
+
+<div class="hud counter" dir="ltr" aria-hidden="true"><b id="cur">01</b> / <span id="tot">08</span></div>
+<nav class="hud dots" id="dots" aria-label="שלבים"></nav>
+<div class="hud bar"><i id="prog"></i></div>
+<div class="hud bgload" aria-hidden="true"><i id="bgload"></i></div>
+<div class="hud hint" id="hint"><span class="mouse"></span>גללו</div>
+
+<div id="track"></div>
+
+<script>
+/* ---------- Config (filled at build time) ---------- */
+const ASSET_VERSION = 5;        // bump when frames change, so browsers don't reuse old cached images
+const STAGES = [{"dir": "frames/s1", "count": 120}, {"dir": "frames/s2", "count": 121}, {"dir": "frames/s3", "count": 120}];      // [{dir, count}]
+const SCROLL_PER_STAGE = 1.4;   // viewport heights of scrolling per video
+const EASE = 0.14;              // smoothing (0..1), lower = smoother/slower
+
+/* ---------- Setup ---------- */
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d', { alpha: false });
+
+const frames = [];          // flat list of Image objects across all stages
+const stageStart = [];      // index of first frame per stage
+STAGES.forEach((s, si) => {
+  stageStart.push(frames.length);
+  for (let i = 1; i <= s.count; i++) {
+    frames.push({ src: `${s.dir}/${String(i).padStart(4, '0')}.webp?v=${ASSET_VERSION}`, img: null, ready: false, stage: si });
+  }
+});
+const TOTAL = frames.length;
+
+document.getElementById('tot').textContent = String(STAGES.length).padStart(2, '0');
+document.getElementById('track').style.height = `${STAGES.length * SCROLL_PER_STAGE * 100 + 100}vh`;
+
+/* ---------- Stage dots ---------- */
+const dotsEl = document.getElementById('dots');
+const dots = STAGES.map((_, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('aria-label', `שלב ${i + 1}`);
+  b.addEventListener('click', () => goToStage(i));
+  dotsEl.appendChild(b);
+  return b;
+});
+
+/* ---------- Preload ---------- */
+function loadOne(f) {
+  return new Promise(res => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => {
+      const done = () => { f.img = img; f.ready = true; res(); };
+      // decode() can stall in background tabs; never let it block loading
+      if (img.decode) Promise.race([img.decode(), new Promise(r => setTimeout(r, 1500))]).then(done, done);
+      else done();
+    };
+    img.onerror = () => res();
+    img.src = f.src;
+  });
+}
+
+async function preloadAll(onProgress, onFirstStage) {
+  // Order: all of stage 1, then the first frame of every stage, then everything else in sequence.
+  const s1 = frames.slice(0, STAGES[0].count);
+  const firsts = stageStart.slice(1).map(i => frames[i]);
+  const seen = new Set([...s1, ...firsts]);
+  const order = [...s1, ...firsts, ...frames.filter(f => !seen.has(f))];
+  const gate = s1.length + firsts.length;
+  let loaded = 0, next = 0, opened = false;
+  const CONC = 16;
+  async function worker() {
+    while (next < order.length) {
+      const f = order[next++];
+      if (!f.ready) await loadOne(f);
+      loaded++;
+      onProgress(loaded / order.length);
+      if (!opened && loaded >= gate) { opened = true; onFirstStage(); }
+    }
+  }
+  await Promise.all(Array.from({ length: CONC }, worker));
+  if (!opened) onFirstStage();
+}
+
+/* ---------- Drawing ---------- */
+let W = 0, H = 0, DPR = 1;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = Math.round(W * DPR);
+  canvas.height = Math.round(H * DPR);
+  lastDrawn = -1;
+}
+
+function nearestReady(i) {
+  if (frames[i] && frames[i].ready) return frames[i].img;
+  for (let d = 1; d < TOTAL; d++) {
+    if (frames[i - d] && frames[i - d].ready) return frames[i - d].img;
+    if (frames[i + d] && frames[i + d].ready) return frames[i + d].img;
+  }
+  return null;
+}
+
+// Always show the whole frame (contain). Leftover space gets a soft blurred fill, drawn once per render.
+const blurC = document.createElement('canvas');
+const bctx = blurC.getContext('2d');
+blurC.width = 16; blurC.height = 9;
+
+function fitRect(img) {
+  const cw = canvas.width, ch = canvas.height;
+  const iw = img.naturalWidth, ih = img.naturalHeight;
+  const s = Math.min(cw / iw, ch / ih);
+  const dw = Math.round(iw * s), dh = Math.round(ih * s);
+  return [Math.round((cw - dw) / 2), Math.round((ch - dh) / 2), dw, dh];
+}
+
+function drawFill(img) {
+  const cw = canvas.width, ch = canvas.height;
+  bctx.drawImage(img, 0, 0, 16, 9);
+  ctx.drawImage(blurC, -cw * 0.1, -ch * 0.1, cw * 1.2, ch * 1.2);
+  ctx.fillStyle = 'rgba(7,8,12,0.12)';
+  ctx.fillRect(0, 0, cw, ch);
+}
+
+let lastDrawn = -1;
+function render(pos) {
+  // pos is a float frame index; neighbouring frames are blended for extra smoothness
+  const key = Math.round(pos * 100);
+  if (key === lastDrawn) return;
+  lastDrawn = key;
+
+  const a = Math.floor(pos), t = pos - a;
+  const imgA = nearestReady(a);
+  if (!imgA) return;
+  const imgB = (t > 0.02 && a + 1 < TOTAL) ? nearestReady(a + 1) : null;
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  drawFill(imgA);
+  const r = fitRect(imgA);
+  ctx.drawImage(imgA, ...r);
+  if (imgB && imgB !== imgA) {
+    ctx.globalAlpha = t;
+    ctx.drawImage(imgB, ...r);
+    ctx.globalAlpha = 1;
+  }
+  return;
+  // subtle vignette for depth
+  const g = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.35, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) * 0.75);
+  g.addColorStop(0, 'rgba(0,0,0,0)');
+  g.addColorStop(1, 'rgba(0,0,0,0.45)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+/* ---------- Scroll → frame ---------- */
+const curEl = document.getElementById('cur');
+const progEl = document.getElementById('prog');
+const hintEl = document.getElementById('hint');
+
+function maxScroll() { return Math.max(1, document.documentElement.scrollHeight - window.innerHeight); }
+function targetPos() {
+  const p = Math.min(1, Math.max(0, window.scrollY / maxScroll()));
+  return Math.round(p * (TOTAL - 1));
+}
+function stageOf(pos) {
+  let s = 0;
+  for (let i = 0; i < stageStart.length; i++) if (pos >= stageStart[i] - 0.5) s = i;
+  return s;
+}
+function goToStage(i) {
+  const p = stageStart[i] / (TOTAL - 1);
+  window.scrollTo({ top: p * maxScroll(), behavior: 'smooth' });
+}
+
+let pos = 0, activeStage = -1;
+function tick() {
+  const target = targetPos();
+  pos += (target - pos) * EASE;
+  if (Math.abs(target - pos) < 0.002) pos = target;
+  render(pos);
+
+  const s = stageOf(pos);
+  if (s !== activeStage) {
+    activeStage = s;
+    curEl.textContent = String(s + 1).padStart(2, '0');
+    dots.forEach((d, i) => d.classList.toggle('on', i === s));
+  }
+  progEl.style.width = `${(pos / (TOTAL - 1)) * 100}%`;
+  hintEl.style.opacity = window.scrollY > 40 ? 0 : 1;
+  requestAnimationFrame(tick);
+}
+
+/* Keyboard: jump between stages */
+window.addEventListener('keydown', e => {
+  if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); goToStage(Math.min(STAGES.length - 1, activeStage + 1)); }
+  if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goToStage(Math.max(0, activeStage - 1)); }
+  if (e.key === 'Home') { e.preventDefault(); goToStage(0); }
+  if (e.key === 'End') { e.preventDefault(); window.scrollTo({ top: maxScroll(), behavior: 'smooth' }); }
+});
+
+window.addEventListener('resize', resize);
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+/* ---------- Boot ---------- */
+(async () => {
+  resize();
+  window.scrollTo(0, 0);
+  const pctEl = document.getElementById('pct'), pbar = document.getElementById('pbar');
+  // Show the first frame as soon as it exists
+  await loadOne(frames[0]);
+  render(0);
+  const bgEl = document.getElementById('bgload');
+  let started = false;
+  await preloadAll(p => {
+    const v = Math.round(p * 100);
+    if (!started) {
+      const gateShare = (STAGES[0].count + STAGES.length - 1) / TOTAL;
+      const g = Math.min(100, Math.round((p / gateShare) * 100));
+      pctEl.textContent = g + '%';
+      pbar.style.width = g + '%';
+    } else {
+      bgEl.style.width = v + '%';
+      if (v >= 100) bgEl.parentElement.hidden = true;
+    }
+  }, () => {
+    started = true;
+    document.getElementById('loader').classList.add('done');
+    lastDrawn = -1;
+    requestAnimationFrame(tick);
+  });
+})();
+</script>
+</body>
+</html>
