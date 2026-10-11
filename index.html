@@ -161,14 +161,25 @@ function nearestReady(i) {
   return null;
 }
 
-// Frames are uniform 16:9. Wide screens: fill the screen (cover). Tall screens: show the whole frame (contain).
+// Always show the whole frame (contain). Leftover space gets a soft blurred fill, drawn once per render.
+const blurC = document.createElement('canvas');
+const bctx = blurC.getContext('2d');
+blurC.width = 16; blurC.height = 9;
+
 function fitRect(img) {
   const cw = canvas.width, ch = canvas.height;
   const iw = img.naturalWidth, ih = img.naturalHeight;
-  const portrait = cw / ch < 1.2;
-  const s = portrait ? Math.min(cw / iw, ch / ih) : Math.max(cw / iw, ch / ih);
+  const s = Math.min(cw / iw, ch / ih);
   const dw = Math.round(iw * s), dh = Math.round(ih * s);
   return [Math.round((cw - dw) / 2), Math.round((ch - dh) / 2), dw, dh];
+}
+
+function drawFill(img) {
+  const cw = canvas.width, ch = canvas.height;
+  bctx.drawImage(img, 0, 0, 16, 9);
+  ctx.drawImage(blurC, -cw * 0.1, -ch * 0.1, cw * 1.2, ch * 1.2);
+  ctx.fillStyle = 'rgba(7,8,12,0.12)';
+  ctx.fillRect(0, 0, cw, ch);
 }
 
 let lastDrawn = -1;
@@ -183,10 +194,9 @@ function render(pos) {
   if (!imgA) return;
   const imgB = (t > 0.02 && a + 1 < TOTAL) ? nearestReady(a + 1) : null;
 
-  ctx.fillStyle = '#07080c';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
+  drawFill(imgA);
   const r = fitRect(imgA);
   ctx.drawImage(imgA, ...r);
   if (imgB && imgB !== imgA) {
@@ -194,6 +204,7 @@ function render(pos) {
     ctx.drawImage(imgB, ...r);
     ctx.globalAlpha = 1;
   }
+  return;
   // subtle vignette for depth
   const g = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, Math.min(canvas.width, canvas.height) * 0.35, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) * 0.75);
   g.addColorStop(0, 'rgba(0,0,0,0)');
