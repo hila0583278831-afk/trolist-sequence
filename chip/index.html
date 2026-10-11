@@ -27,8 +27,14 @@
 
   /* Entry hero: a static screen shown before the chip sequence starts */
   #hero { position: relative; z-index: 20; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; background: #0b0b10; }
-  #hero > img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+  /* Blurred, cropped copy fills the screen behind — never the thing people actually read */
+  #hero .heroFill {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: blur(50px) saturate(1.1) brightness(.6); transform: scale(1.2);
+  }
+  /* The real photo: always shown in full, never cropped, on any screen shape */
+  #hero > img.heroMain {
+    position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; display: block;
     /* soft dissolve at the bottom edge, like mist, instead of a hard cutoff */
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,.75) 70%, rgba(0,0,0,.35) 85%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0,0,0,.75) 70%, rgba(0,0,0,.35) 85%, transparent 100%);
@@ -90,7 +96,8 @@
 </head>
 <body>
 <div id="hero">
-  <img src="img/hero.webp?v=1" alt="TROLIST — Smarter Check-in, Smoother Boarding">
+  <img class="heroFill" src="img/hero.webp?v=1" alt="" aria-hidden="true">
+  <img class="heroMain" src="img/hero.webp?v=1" alt="TROLIST — Smarter Check-in, Smoother Boarding">
   <div class="clouds" id="clouds" aria-hidden="true">
     <img class="cloud c3" src="img/cloud.svg" alt="">
     <img class="cloud c4" src="img/cloud.svg" alt="">
