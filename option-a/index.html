@@ -122,6 +122,8 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
 
 
 
+@media (min-width:861px){.hero{--H:min(calc(100vw*940/1673),max(100vh,calc(100vw*940/1673*.72)));--v:calc(var(--H)/940);height:var(--H);aspect-ratio:auto}.dots{top:calc(var(--v)*367)}.cta{top:calc(var(--v)*80)}.copy{top:calc(var(--v)*706)}.wordmark{top:calc(var(--v)*262.3)}}
+/*herofit*/
 /* ---------- Section 02 · the operational gap (scroll-pinned) ---------- */
 .gap2{--navy:#070a1d;position:relative;direction:rtl;color:#fff;font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:#05061a;overflow:clip}
 .gap2__pin{position:relative;overflow:hidden;isolation:isolate;display:flex;align-items:center;min-height:100vh;min-height:100svh;padding:clamp(110px,11vw,170px) max(20px,6vw);background:
@@ -167,7 +169,6 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
   .xfer--pin .xfer__strip{flex-direction:row;direction:ltr;position:absolute;left:0;top:0;width:200%;height:100%;transform:translate3d(-50%,0,0);will-change:transform}
   .xfer--pin .xfer__p{flex:0 0 50%;width:50%;height:100%;overflow:hidden;position:relative}
   .xfer--pin .xfer__p1{order:0;background:#fff}
-  .xfer--pin .xfer__p1::before{content:'';position:absolute;inset:-6%;background:var(--hbg,none) center/cover;filter:blur(30px) saturate(1.05);opacity:.9}
   .xfer--pin .xfer__p1 .hero{position:relative}
   .xfer--pin .xfer__p2{overflow:hidden}
   .xfer--pin .gap2{height:100%}
@@ -1581,6 +1582,7 @@ mountLanyard(document.getElementById('lanyard'), {
 
 
 
+
 <script>
 (function(){var s=document.getElementById('gap2');if(!s)return;
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1600,8 +1602,6 @@ mountLanyard(document.getElementById('lanyard'), {
     if(desk){
       /* desktop: hero and Section 02 are two panels of one pinned strip; scrolling slides the strip to the RIGHT */
       /* hero taller than the window: scale it to fit so the whole hero is visible; the sides are filled with a soft blur of its own background */
-      hero.style.transform=''; var hh=hero.offsetHeight, sc=hh>vh?vh/hh:1; hero.style.transformOrigin='top center'; hero.style.transform=sc<1?'scale('+sc.toFixed(4)+')':'';
-      xs.querySelector('.xfer__p1').style.setProperty('--hbg',getComputedStyle(hero).backgroundImage);
       travel=Math.round(vh*2.4); xs.style.height=(vh+travel)+'px'; xs.classList.add('xfer--pin'); s.classList.remove('gap2--pin');
     }else{
       xs.classList.remove('xfer--pin'); strip.style.transform=''; hero.style.transform='';
