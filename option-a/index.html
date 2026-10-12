@@ -489,6 +489,84 @@ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInter
 })();
 </script>
 <!--s4:end-->
+<!--ob:start-->
+<style id="ob-css">
+.ob{--ob-ink:#15153a;--ob-mut:#5d5f86;--ob-v:#8A62F5;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,128px) max(20px,6vw) clamp(72px,8vw,128px);color:var(--ob-ink);font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(50% 40% at 18% 78%,rgba(138,98,245,.14),transparent 70%),radial-gradient(40% 30% at 85% 12%,rgba(138,98,245,.10),transparent 70%),linear-gradient(180deg,#fff 0,#f6f2ff 45%,#eee7fd 100%)}
+.ob *{box-sizing:border-box}
+.ob__in{max-inline-size:1280px;margin-inline:auto}
+.ob__hd{max-inline-size:760px}
+.ob__eye{margin:0 0 18px;display:inline-flex;align-items:center;gap:10px;font-size:clamp(13px,1.05vw,15.5px);letter-spacing:.04em;color:var(--ob-v);font-weight:500}
+.ob__eye::before{content:"";inline-size:28px;block-size:1px;background:linear-gradient(90deg,transparent,var(--ob-v))}
+.ob__h{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,76px);line-height:1.08;text-wrap:balance}
+.ob__h em{font-style:normal;background:linear-gradient(90deg,#4f46d8,#8A62F5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ob__p{margin:clamp(18px,2vw,28px) 0 0;max-inline-size:40em;font-size:clamp(16px,1.3vw,20px);line-height:1.7;color:var(--ob-mut)}
+.ob__flow{position:relative;list-style:none;margin:clamp(40px,5vw,72px) 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr 1fr .55fr;block-size:580px}
+.ob__svg{position:absolute;inset:0;inline-size:100%;block-size:100%;overflow:visible;pointer-events:none}
+.ob__svg path{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.ob__base{stroke:rgba(138,98,245,.2);stroke-width:2}
+.ob__draw{stroke:#8A62F5;stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 3s cubic-bezier(.45,.1,.25,1) .3s}
+.ob.in .ob__draw{stroke-dashoffset:0}
+.ob__pulse{stroke:#d9ccff;stroke-width:3;stroke-dasharray:.045 .955;stroke-dashoffset:0;opacity:0}
+.ob.in .ob__pulse{opacity:1;animation:ob-pl 4.5s linear 3.6s infinite}
+@keyframes ob-pl{from{stroke-dashoffset:0}to{stroke-dashoffset:-1}}
+.ob__it{position:relative;min-inline-size:0;opacity:0;transition:opacity .9s ease}
+.ob.in .ob__it{opacity:1}
+.ob.in .ob__it:nth-child(2){transition-delay:.3s}.ob.in .ob__it:nth-child(3){transition-delay:1.15s}.ob.in .ob__it:nth-child(4){transition-delay:1.95s}.ob.in .ob__it:nth-child(5){transition-delay:2.7s}
+.ob__nd{position:absolute;inset-inline:0;margin-inline:auto;inline-size:68px;block-size:68px;border-radius:50%;background:#fff;border:2px solid var(--c);box-shadow:8px 10px 22px -8px rgba(70,40,160,.35);display:grid;place-items:center;color:var(--c);z-index:2}
+.ob__nd svg{inline-size:28px;block-size:28px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ob__st{position:absolute;inset-inline:0;margin-inline:auto;inline-size:2px;block-size:32px;background:var(--c)}
+.ob__cd{position:absolute;inset-inline:14px;border:2px solid var(--c);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px clamp(16px,2vw,32px);background:rgba(255,255,255,.4)}
+.ob__it.up .ob__nd{inset-block-start:0}.ob__it.up .ob__st{inset-block-start:68px}
+.ob__it.up .ob__cd{inset-block:100px 110px;border-block-end:0;border-radius:48px 48px 0 0}
+.ob__it.dn .ob__nd{inset-block-end:0}.ob__it.dn .ob__st{inset-block-end:68px}
+.ob__it.dn .ob__cd{inset-block:130px 100px;border-block-start:0;border-radius:0 0 48px 48px}
+.ob__it:nth-child(2){--c:#8A62F5}.ob__it:nth-child(3){--c:#6f4be0}.ob__it:nth-child(4){--c:#5a3fc9}
+.ob__no{display:block;margin:0 0 10px;font-size:13px;letter-spacing:.14em;color:var(--c);font-weight:600}
+.ob__t{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(19px,1.7vw,29px);line-height:1.15;color:var(--c)}
+.ob__d{margin:14px 0 0;font-size:clamp(14.5px,1.12vw,17px);line-height:1.65;color:var(--ob-mut)}
+.ob__goal{position:absolute;inset-inline-end:0;inline-size:calc(100%*.55/3.55);inset-block-start:290px;margin-block-start:-27px;display:flex;justify-content:center}
+.ob__gd{position:relative;inline-size:54px;block-size:54px;border-radius:50%;background:linear-gradient(145deg,#a98bff,#6f4be0);box-shadow:0 14px 34px -10px rgba(111,75,224,.7),inset 0 0 0 1px rgba(255,255,255,.35);display:grid;place-items:center}
+.ob__gd i{inline-size:12px;block-size:12px;border-radius:50%;background:#fff;box-shadow:0 0 14px 3px rgba(255,255,255,.8)}
+.ob__gd::before,.ob__gd::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(138,98,245,.4);opacity:0}
+.ob.in .ob__gd::before{animation:ob-rg 3.2s ease-out 3.2s infinite}.ob.in .ob__gd::after{animation:ob-rg 3.2s ease-out 4.8s infinite}
+@keyframes ob-rg{0%{opacity:.8;transform:scale(.9)}100%{opacity:0;transform:scale(2.1)}}
+.ob__note{margin:clamp(40px,5vw,72px) 0 0;max-inline-size:44em;padding-inline-start:18px;border-inline-start:2px solid rgba(138,98,245,.5);font-size:clamp(14px,1.08vw,16.5px);line-height:1.7;color:var(--ob-mut);opacity:0;transition:opacity .9s ease 2.4s}
+.ob.in .ob__note{opacity:1}
+.ob__hd>*{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .9s cubic-bezier(.22,.8,.24,1)}
+.ob.in .ob__hd>*{opacity:1;transform:none}
+.ob.in .ob__hd>:nth-child(2){transition-delay:.12s}.ob.in .ob__hd>:nth-child(3){transition-delay:.24s}
+@media (max-width:860px){
+  .ob__flow{grid-template-columns:1fr;block-size:auto;gap:28px;padding-inline-start:0}
+  .ob__svg{display:none}
+  .ob__flow::before{content:"";position:absolute;inset-inline-start:33px;inset-block:34px 34px;inline-size:2px;background:linear-gradient(180deg,#8A62F5,rgba(138,98,245,.25));transform-origin:center top;transform:scaleY(0);transition:transform 2.6s ease .3s}
+  .ob.in .ob__flow::before{transform:scaleY(1)}
+  .ob__it{padding-inline-start:96px;min-block-size:68px}
+  .ob__nd{position:absolute!important;inset-inline:auto!important;inset-inline-start:0!important;inset-block:0 auto!important;margin:0}
+  .ob__st{display:none}
+  .ob__cd,.ob__it.up .ob__cd,.ob__it.dn .ob__cd{position:static;inset:auto;border:2px solid var(--c);border-radius:28px;align-items:flex-start;text-align:start;padding:22px 22px}
+  .ob__goal{position:relative;inset:auto;margin:0;inline-size:auto;justify-content:flex-start;padding-inline-start:7px}
+  .ob.in .ob__it:nth-child(2){transition-delay:.3s}.ob.in .ob__it:nth-child(3){transition-delay:.9s}.ob.in .ob__it:nth-child(4){transition-delay:1.5s}.ob.in .ob__it:nth-child(5){transition-delay:2.1s}
+}
+@media (prefers-reduced-motion:reduce){.ob__hd>*,.ob__it,.ob__note{opacity:1!important;transform:none!important;transition:none!important}.ob__draw{stroke-dashoffset:0!important;transition:none!important}.ob__pulse,.ob__gd::before,.ob__gd::after{display:none}.ob__flow::before{transform:none!important;transition:none!important}}
+</style>
+<section class="ob" id="ob" dir="rtl" lang="he" aria-labelledby="obh">
+  <div class="ob__in">
+    <div class="ob__hd">
+      <p class="ob__eye">היתרון התפעולי של TrolList</p>
+      <h2 class="ob__h" id="obh">לזהות מוקדם.<br><em>להיערך בזמן.</em></h2>
+      <p class="ob__p">TrolList נועדה לסייע לזהות מחסור צפוי במקום לטרולי, כדי לאפשר לצוות לבחון את אפשרויות הטיפול בעודף הכבודה עוד באזור הגייט.</p>
+    </div>
+    <ol class="ob__flow"><svg class="ob__svg" viewBox="0 0 1000 580" preserveAspectRatio="none" aria-hidden="true"><path class="ob__base" d="M859,34 H740 C718,34 718,546 696,546 H577 H459 C437,546 437,34 415,34 H296 H177 C155,34 155,290 133,290 H77"/><path class="ob__draw" pathLength="1" d="M859,34 H740 C718,34 718,546 696,546 H577 H459 C437,546 437,34 415,34 H296 H177 C155,34 155,290 133,290 H77"/><path class="ob__pulse" pathLength="1" d="M859,34 H740 C718,34 718,546 696,546 H577 H459 C437,546 437,34 415,34 H296 H177 C155,34 155,290 133,290 H77"/></svg><li class="ob__it up"><span class="ob__st" aria-hidden="true"></span><span class="ob__nd" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></span><div class="ob__cd"><span class="ob__no">01</span><h3 class="ob__t">לזהות מחסור צפוי</h3><p class="ob__d">שילוב המידע שנאסף עם נתוני הקיבולת כדי להעריך אם צפוי עודף כבודת יד.</p></div></li><li class="ob__it dn"><span class="ob__st" aria-hidden="true"></span><span class="ob__nd" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div class="ob__cd"><span class="ob__no">02</span><h3 class="ob__t">להקדים את ההיערכות</h3><p class="ob__d">לזהות את האתגר לפני העלייה למטוס, במקום לגלות אותו רק כשאין מקום בתאים.</p></div></li><li class="ob__it up"><span class="ob__st" aria-hidden="true"></span><span class="ob__nd" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4v6a4 4 0 0 0 4 4h8"/><path d="m15 11 3 3-3 3"/><circle cx="6" cy="19" r="1.6"/></svg></span><div class="ob__cd"><span class="ob__no">03</span><h3 class="ob__t">לתמוך בהחלטה</h3><p class="ob__d">להציג לצוות תמונת מצב והמלצה לבחינת טיפול בעודף הכבודה באזור הגייט.</p></div></li><li class="ob__it ob__goal" aria-hidden="true"><span class="ob__gd"><i></i></span></li></ol>
+    <p class="ob__note">היכולות והערך התפעולי מיועדים להיבחן במסגרת הפיילוט. אין כאן הבטחה לחיסכון מוכח בזמן.</p>
+  </div>
+</section>
+<script>
+(function(){var s=document.getElementById('ob');if(!s)return;function go(){s.classList.add('in')}
+try{if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){go();return}
+var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.disconnect()}},{threshold:.25});o.observe(s)}catch(x){go()}})();
+</script>
+<!--ob:end-->
+
 
 
 
