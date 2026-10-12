@@ -491,17 +491,17 @@ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInter
 <!--s4:end-->
 <!--ob:start-->
 <style id="ob-css">
-.ob{--ob-ink:#15153a;--ob-mut:#5d5f86;--ob-v:#8A62F5;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,128px) max(20px,6vw) clamp(72px,8vw,128px);color:var(--ob-ink);font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(50% 40% at 18% 78%,rgba(138,98,245,.14),transparent 70%),radial-gradient(40% 30% at 85% 12%,rgba(138,98,245,.10),transparent 70%),linear-gradient(180deg,#fff 0,#f6f2ff 45%,#eee7fd 100%)}
+.ob{--ob-ink:#15153a;--ob-mut:#5d5f86;--ob-v:#8A62F5;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,128px) max(20px,6vw) clamp(88px,9vw,144px);color:var(--ob-ink);font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(50% 40% at 18% 78%,rgba(138,98,245,.14),transparent 70%),radial-gradient(40% 30% at 85% 12%,rgba(138,98,245,.10),transparent 70%),linear-gradient(180deg,#fff 0,#f6f2ff 45%,#eee7fd 100%)}
 .ob *{box-sizing:border-box}
 .ob__in{max-inline-size:1280px;margin-inline:auto}
 .ob__hd{max-inline-size:760px}
 .ob__eye{margin:0 0 18px;display:inline-flex;align-items:center;gap:10px;font-size:clamp(13px,1.05vw,15.5px);letter-spacing:.04em;color:var(--ob-v);font-weight:500}
 .ob__eye::before{content:"";inline-size:28px;block-size:1px;background:linear-gradient(90deg,transparent,var(--ob-v))}
-.ob__h{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(34px,4.6vw,76px);line-height:1.08;text-wrap:balance}
+.ob__h{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(30px,4vw,66px);line-height:1.1;text-wrap:balance}
 .ob__h em{font-style:normal;background:linear-gradient(90deg,#4f46d8,#8A62F5);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ob__p{margin:clamp(18px,2vw,28px) 0 0;max-inline-size:40em;font-size:clamp(16px,1.3vw,20px);line-height:1.7;color:var(--ob-mut)}
-.ob__flow{position:relative;list-style:none;margin:clamp(44px,5vw,80px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px)}
-.ob__ln{position:absolute;inset-inline:calc(100%/6);inset-block-start:28px;block-size:2px;border-radius:2px;background:rgba(138,98,245,.16);overflow:hidden;pointer-events:none;z-index:0}
+.ob__p{margin:clamp(16px,1.6vw,24px) 0 0;max-inline-size:40em;font-size:clamp(16px,1.3vw,20px);line-height:1.7;color:var(--ob-mut)}
+.ob__flow{--g:clamp(16px,2vw,28px);position:relative;list-style:none;margin:clamp(36px,4vw,64px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g)}
+.ob__ln{position:absolute;inset-inline:calc((100% - 2*var(--g))/6);inset-block-start:27px;block-size:2px;border-radius:2px;background:rgba(138,98,245,.16);overflow:hidden;pointer-events:none;z-index:0}
 .ob__ln i{position:absolute;inset:0;background:linear-gradient(270deg,#8A62F5,#b79cff);transform-origin:right center;transform:scaleX(0);transition:transform 2.6s cubic-bezier(.4,.1,.2,1) .4s}
 .ob.in .ob__ln i{transform:scaleX(1)}
 .ob__ln b{position:absolute;inset-block:-2px;inset-inline-start:0;inline-size:16%;background:linear-gradient(270deg,transparent,#fff,transparent);opacity:0}
@@ -513,12 +513,13 @@ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInter
 .ob__nd{position:relative;z-index:1;display:grid;place-items:center;inline-size:56px;block-size:56px;border-radius:50%;background:#fff;color:var(--ob-v);box-shadow:0 0 0 1px rgba(138,98,245,.3),0 10px 24px -10px rgba(70,40,160,.4);transition:box-shadow .8s ease,background .8s ease,color .8s ease}
 .ob__nd svg{inline-size:24px;block-size:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .ob.in .ob__it .ob__nd{background:linear-gradient(145deg,#a98bff,#6f4be0);color:#fff;box-shadow:0 0 0 5px rgba(138,98,245,.14),0 0 22px 2px rgba(138,98,245,.5)}
-.ob.in .ob__it:nth-child(3) .ob__nd{transition-delay:1.5s}.ob.in .ob__it:nth-child(4) .ob__nd{transition-delay:2.8s}.ob.in .ob__it:nth-child(2) .ob__nd{transition-delay:.4s}
-.ob__cd{margin-block-start:20px;inline-size:100%;flex:1;padding:clamp(20px,2vw,30px) clamp(18px,2vw,32px);border-radius:22px;border:1px solid rgba(138,98,245,.22);background:rgba(255,255,255,.72);box-shadow:0 18px 40px -26px rgba(70,40,160,.4);text-align:center}
+.ob.in .ob__it .ob__cd{border-color:rgba(138,98,245,.5);box-shadow:0 0 0 3px rgba(138,98,245,.07),0 18px 40px -22px rgba(111,75,224,.55)}
+.ob.in .ob__it:nth-child(3) .ob__nd,.ob.in .ob__it:nth-child(3) .ob__cd{transition-delay:1.5s}.ob.in .ob__it:nth-child(4) .ob__nd,.ob.in .ob__it:nth-child(4) .ob__cd{transition-delay:2.8s}.ob.in .ob__it:nth-child(2) .ob__nd,.ob.in .ob__it:nth-child(2) .ob__cd{transition-delay:.4s}
+.ob__cd{transition:border-color .8s ease,box-shadow .8s ease;margin-block-start:20px;inline-size:100%;flex:1;padding:clamp(20px,2vw,30px) clamp(18px,2vw,32px);border-radius:22px;border:1px solid rgba(138,98,245,.22);background:rgba(255,255,255,.72);box-shadow:0 18px 40px -26px rgba(70,40,160,.4);text-align:center}
 .ob__no{display:block;margin:0 0 8px;font-size:12.5px;letter-spacing:.16em;color:var(--ob-v);font-weight:600}
 .ob__t{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(19px,1.6vw,26px);line-height:1.15;color:var(--ob-ink)}
 .ob__d{margin:12px auto 0;max-inline-size:21em;font-size:clamp(15px,1.12vw,17px);line-height:1.6;color:var(--ob-mut);text-wrap:pretty}
-.ob__note{margin:clamp(40px,5vw,72px) 0 0;max-inline-size:44em;padding-inline-start:18px;border-inline-start:2px solid rgba(138,98,245,.5);font-size:clamp(14px,1.08vw,16.5px);line-height:1.7;color:var(--ob-mut);opacity:0;transition:opacity .9s ease 2.4s}
+.ob__note{margin:clamp(32px,3.6vw,56px) 0 0;padding-block:2px;max-inline-size:44em;padding-inline-start:18px;border-inline-start:2px solid rgba(138,98,245,.5);font-size:clamp(14px,1.08vw,16.5px);line-height:1.7;color:var(--ob-mut);opacity:0;transition:opacity .9s ease 2.4s}
 .ob.in .ob__note{opacity:1}
 .ob__hd>*{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .9s cubic-bezier(.22,.8,.24,1)}
 .ob.in .ob__hd>*{opacity:1;transform:none}
@@ -533,9 +534,9 @@ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInter
   .ob__nd{flex:none}
   .ob__cd{margin:0;text-align:start}
   .ob__d{margin-inline:0}
-  .ob.in .ob__it:nth-child(3) .ob__nd{transition-delay:.9s}.ob.in .ob__it:nth-child(4) .ob__nd{transition-delay:1.6s}
+  .ob.in .ob__it:nth-child(3) .ob__nd,.ob.in .ob__it:nth-child(3) .ob__cd{transition-delay:.9s}.ob.in .ob__it:nth-child(4) .ob__nd,.ob.in .ob__it:nth-child(4) .ob__cd{transition-delay:1.6s}
 }
-@media (prefers-reduced-motion:reduce){.ob__hd>*,.ob__it,.ob__note{opacity:1!important;transform:none!important;transition:none!important}.ob__ln i{transform:none!important;transition:none!important}.ob__ln b{display:none}.ob__nd{transition:none!important}}
+@media (prefers-reduced-motion:reduce){.ob__hd>*,.ob__it,.ob__note{opacity:1!important;transform:none!important;transition:none!important}.ob__ln i{transform:none!important;transition:none!important}.ob__ln b{display:none}.ob__nd,.ob__cd{transition:none!important}}
 </style>
 <section class="ob" id="ob" dir="rtl" lang="he" aria-labelledby="obh">
   <div class="ob__in">
