@@ -1577,11 +1577,12 @@ mountLanyard(document.getElementById('lanyard'), {
 
 
 
+
 <script>
 (function(){var s=document.getElementById('gap2');if(!s)return;
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var G=window.__g2={p:0,sp:rm?.4:0}; if(rm)return;           /* reduced motion: no pinning, everything visible */
-  var xs=document.getElementById('xfer'),strip=document.getElementById('xferStrip'),seam=xs.querySelector('.xfer__seam');
+  var xs=document.getElementById('xfer'),strip=document.getElementById('xferStrip'),seam=xs.querySelector('.xfer__seam'),hero=xs.querySelector('.xfer__p1 .hero'),hOver=0;
   var top=s.querySelector('.gap2__top'),bot=s.querySelector('.gap2__bot'),track=document.getElementById('g2track');
   var rv={e:document.getElementById('g2e'),h1:document.getElementById('g2h1'),h2:document.getElementById('g2h2'),p:document.getElementById('g2p')};
   var T=[['e',.40,.52],['h1',.45,.58],['h2',.52,.65],['p',.60,.72]];     /* desktop: text arrives after the scene has landed */
@@ -1595,9 +1596,10 @@ mountLanyard(document.getElementById('lanyard'), {
     s.style.height='';xs.style.height='';
     if(desk){
       /* desktop: hero and Section 02 are two panels of one pinned strip; scrolling slides the strip to the RIGHT */
-      travel=Math.round(vh*2.4); xs.style.height=(vh+travel)+'px'; xs.classList.add('xfer--pin'); s.classList.remove('gap2--pin');
+      hero.style.transform=''; hOver=Math.max(0,hero.offsetHeight-vh);   /* hero taller than the window: scroll it into view first */
+      travel=Math.round(vh*2.4+hOver); xs.style.height=(vh+travel)+'px'; xs.classList.add('xfer--pin'); s.classList.remove('gap2--pin');
     }else{
-      xs.classList.remove('xfer--pin'); strip.style.transform='';
+      xs.classList.remove('xfer--pin'); strip.style.transform=''; hero.style.transform='';
       travel=Math.round(vh*1.1); s.style.height=(vh+travel)+'px'; s.classList.add('gap2--pin'); X=vw*.45;
     }
     update();
@@ -1611,7 +1613,8 @@ mountLanyard(document.getElementById('lanyard'), {
     G.sp+=(G.p-G.sp)*.12; if(Math.abs(G.p-G.sp)<.0004)G.sp=G.p;
     var p=G.sp, tl=desk?T:TM;
     if(desk){
-      var m=ease(clamp(p/.5,0,1));
+      var pv=hOver?clamp(p*travel/(hOver),0,1):1; hero.style.transform='translate3d(0,'+(-hOver*ease(pv)).toFixed(1)+'px,0)';
+      var a=hOver/travel, m=ease(clamp((p-a)/(.5*(1-a)+0.0001),0,1));
       /* whole composition (hero out, dark scene in) travels RIGHT: strip x goes from -100vw to 0 */
       strip.style.transform='translate3d('+(-vw*(1-m)).toFixed(1)+'px,0,0)';
       track.style.setProperty('--tx','0px'); seam.style.opacity=clamp(m*6,0,1).toFixed(3);
