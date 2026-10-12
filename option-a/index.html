@@ -167,6 +167,8 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
   .xfer--pin .xfer__strip{flex-direction:row;direction:ltr;position:absolute;left:0;top:0;width:200%;height:100%;transform:translate3d(-50%,0,0);will-change:transform}
   .xfer--pin .xfer__p{flex:0 0 50%;width:50%;height:100%;overflow:hidden;position:relative}
   .xfer--pin .xfer__p1{order:0;background:#fff}
+  .xfer--pin .xfer__p1::before{content:'';position:absolute;inset:-6%;background:var(--hbg,none) center/cover;filter:blur(30px) saturate(1.05);opacity:.9}
+  .xfer--pin .xfer__p1 .hero{position:relative}
   .xfer--pin .xfer__p2{overflow:hidden}
   .xfer--pin .gap2{height:100%}
   .xfer--pin .gap2__pin{height:100%;min-height:0;padding-block:0}
@@ -1578,6 +1580,7 @@ mountLanyard(document.getElementById('lanyard'), {
 
 
 
+
 <script>
 (function(){var s=document.getElementById('gap2');if(!s)return;
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1596,8 +1599,10 @@ mountLanyard(document.getElementById('lanyard'), {
     s.style.height='';xs.style.height='';
     if(desk){
       /* desktop: hero and Section 02 are two panels of one pinned strip; scrolling slides the strip to the RIGHT */
-      hero.style.transform=''; hOver=Math.max(0,hero.offsetHeight-vh);   /* hero taller than the window: scroll it into view first */
-      travel=Math.round(vh*2.4+hOver); xs.style.height=(vh+travel)+'px'; xs.classList.add('xfer--pin'); s.classList.remove('gap2--pin');
+      /* hero taller than the window: scale it to fit so the whole hero is visible; the sides are filled with a soft blur of its own background */
+      hero.style.transform=''; var hh=hero.offsetHeight, sc=hh>vh?vh/hh:1; hero.style.transformOrigin='top center'; hero.style.transform=sc<1?'scale('+sc.toFixed(4)+')':'';
+      xs.querySelector('.xfer__p1').style.setProperty('--hbg',getComputedStyle(hero).backgroundImage);
+      travel=Math.round(vh*2.4); xs.style.height=(vh+travel)+'px'; xs.classList.add('xfer--pin'); s.classList.remove('gap2--pin');
     }else{
       xs.classList.remove('xfer--pin'); strip.style.transform=''; hero.style.transform='';
       travel=Math.round(vh*1.1); s.style.height=(vh+travel)+'px'; s.classList.add('gap2--pin'); X=vw*.45;
@@ -1613,8 +1618,7 @@ mountLanyard(document.getElementById('lanyard'), {
     G.sp+=(G.p-G.sp)*.12; if(Math.abs(G.p-G.sp)<.0004)G.sp=G.p;
     var p=G.sp, tl=desk?T:TM;
     if(desk){
-      var pv=hOver?clamp(p*travel/(hOver),0,1):1; hero.style.transform='translate3d(0,'+(-hOver*ease(pv)).toFixed(1)+'px,0)';
-      var a=hOver/travel, m=ease(clamp((p-a)/(.5*(1-a)+0.0001),0,1));
+      var m=ease(clamp(p/.5,0,1));
       /* whole composition (hero out, dark scene in) travels RIGHT: strip x goes from -100vw to 0 */
       strip.style.transform='translate3d('+(-vw*(1-m)).toFixed(1)+'px,0,0)';
       track.style.setProperty('--tx','0px'); seam.style.opacity=clamp(m*6,0,1).toFixed(3);
