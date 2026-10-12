@@ -562,6 +562,70 @@ try{if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:
 var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.disconnect()}},{threshold:.25});o.observe(s)}catch(x){go()}})();
 </script>
 <!--ob:end-->
+<!--film:start-->
+<style id="film-css">
+.fm{--fm-v:#8A62F5;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,120px) max(20px,6vw);color:#fff;font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(46% 50% at 82% 20%,rgba(138,98,245,.22),transparent 70%),radial-gradient(40% 40% at 10% 90%,rgba(111,75,224,.18),transparent 70%),#111126}
+.fm *{box-sizing:border-box}
+.fm__in{max-inline-size:1180px;margin-inline:auto}
+.fm__hd{text-align:center;max-inline-size:700px;margin-inline:auto}
+.fm__h{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(30px,4vw,62px);line-height:1.1;text-wrap:balance}
+.fm__p{margin:clamp(14px,1.6vw,22px) auto 0;font-size:clamp(16px,1.3vw,20px);line-height:1.7;color:#c7bfe6}
+.fm__vid{position:relative;margin-block-start:clamp(32px,4vw,56px);aspect-ratio:16/9;border-radius:24px;overflow:hidden;border:1px solid rgba(138,98,245,.35);box-shadow:0 40px 80px -40px rgba(0,0,0,.6),0 0 0 6px rgba(138,98,245,.05);background:linear-gradient(135deg,#1b1a3d,#15142e 55%,#1d1745)}
+.fm__vid video{position:absolute;inset:0;inline-size:100%;block-size:100%;object-fit:cover;display:none}
+.fm__vid.has-video video{display:block}
+.fm__vid.has-video .fm__poster{display:none}
+.fm__poster{position:absolute;inset:0}
+.fm__poster::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,transparent,rgba(10,10,30,.55))}
+.fm__tg{position:absolute;inset-inline-end:46%;inset-block-start:10%;inline-size:19%;aspect-ratio:640/900;border-radius:9%/6.5%;overflow:hidden;transform:rotate(-7deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.6),0 0 0 1px rgba(138,98,245,.3)}
+.fm__tg img,.fm__rd img{display:block;inline-size:100%;block-size:100%;object-fit:cover}
+.fm__rd{position:absolute;inset-inline-end:18%;inset-block-start:30%;inline-size:36%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5))}
+.fm__rd img{block-size:auto;transform:rotate(7deg)}
+.fm__wv{position:absolute;inset-inline-end:36%;inset-block-start:34%;inline-size:15%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(169,139,255,.5);animation:fm-w 3.2s ease-out infinite}
+.fm__wv+.fm__wv{animation-delay:1.6s}
+@keyframes fm-w{0%{opacity:.7;transform:scale(.4)}100%{opacity:0;transform:scale(1.6)}}
+.fm__play{position:absolute;inset-inline:0;inset-block-end:48px;margin-inline:auto;inline-size:76px;block-size:76px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(17,17,38,.55);backdrop-filter:blur(6px);display:grid;place-items:center;color:#fff;cursor:default;z-index:2}
+.fm__play svg{inline-size:26px;block-size:26px;fill:currentColor;margin-inline-start:-3px}
+.fm__vid.has-video .fm__play{display:none}
+.fm__soon{position:absolute;inset-inline:0;inset-block-end:16px;text-align:center;font-size:13px;color:#b8afdc;z-index:2}
+.fm__sc{list-style:none;margin:clamp(20px,2.4vw,32px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px)}
+.fm__sc li{padding-block-start:14px;border-block-start:2px solid rgba(138,98,245,.35);font-size:clamp(14px,1.1vw,16.5px);line-height:1.55;color:#c7bfe6}
+.fm__sc b{display:block;margin-block-end:4px;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(16px,1.3vw,20px);color:#fff}
+.fm__sc i{display:block;font-style:normal;font-size:12px;letter-spacing:.14em;color:#a98bff;margin-block-end:6px}
+.fm__note{margin:clamp(20px,2.4vw,32px) 0 0;text-align:center;font-size:13.5px;line-height:1.7;color:#a59dc9}
+@media (max-width:860px){.fm__sc{grid-template-columns:1fr 1fr}.fm__vid{border-radius:18px}.fm__play{inline-size:60px;block-size:60px}}
+@media (prefers-reduced-motion:reduce){.fm__wv{animation:none;opacity:.4}}
+</style>
+<section class="fm" id="film" dir="rtl" lang="he" aria-labelledby="fmh">
+  <div class="fm__in">
+    <div class="fm__hd">
+      <h2 class="fm__h" id="fmh">מהתג ועד להחלטה</h2>
+      <p class="fm__p">מתג RFID ועד לתמונת מצב שמסייעת לצוות להיערך מראש.</p>
+    </div>
+    <!-- To connect the final film: set data-film-src (and optionally data-film-poster) on #filmVid, e.g. data-film-src="media/trolist-film.mp4". -->
+    <div class="fm__vid" id="filmVid" data-film-src="" data-film-poster="">
+      <video playsinline controls preload="none" aria-label="מהתג ועד להחלטה"></video>
+      <div class="fm__poster" aria-hidden="true">
+        <div class="fm__tg"><img src="tag-front.png" alt="" loading="lazy"></div>
+        <span class="fm__wv"></span><span class="fm__wv"></span>
+        <div class="fm__rd"><img src="s3-reader.webp" alt="" loading="lazy"></div>
+      </div>
+      <span class="fm__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="fm__soon">תצוגה מקדימה · הסרטון הסופי יתווסף</span>
+    </div>
+    <ol class="fm__sc">
+      <li><i>01</i><b>התג</b>תג RFID פסיבי על טרולי.</li>
+      <li><i>02</i><b>הסריקה</b>קורא ידני מזהה את התג.</li>
+      <li><i>03</i><b>המידע</b>כמות צפויה מול קיבולת מוגדרת (המחשה בלבד).</li>
+      <li><i>04</i><b>ההחלטה</b>איש צוות בוחן המלצה לפני העלייה.</li>
+    </ol>
+    <p class="fm__note">כל המספרים שיוצגו בסרטון הם להמחשה בלבד ואינם תוצאות תפעוליות אמיתיות.</p>
+  </div>
+</section>
+<script>
+(function(){var w=document.getElementById('filmVid');if(!w)return;var s=w.getAttribute('data-film-src');if(!s)return;var v=w.querySelector('video'),p=w.getAttribute('data-film-poster');if(p)v.poster=p;v.src=s;v.addEventListener('loadeddata',function(){w.classList.add('has-video')},{once:true});v.load()})();
+</script>
+<!--film:end-->
+
 
 
 
