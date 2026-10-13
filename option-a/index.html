@@ -669,8 +669,8 @@ var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.discon
     <div class="fm__vids" id="filmVids">
       <video src="media/stage-1.mp4" poster="media/stage-1.jpg" muted playsinline preload="metadata" aria-label="האתגר"></video>
       <video src="media/stage-2.mp4" poster="media/stage-2.jpg" muted playsinline preload="metadata" aria-label="הסריקה"></video>
-      <video src="media/stage-3.mp4" poster="media/stage-3.jpg" muted playsinline preload="metadata" aria-label="תמונת המצב"></video>
-      <video src="media/stage-4.mp4" poster="media/stage-4.jpg" muted playsinline preload="metadata" aria-label="ההיערכות"></video>
+      <video src="media/stage-4.mp4" poster="media/stage-4.jpg" muted playsinline preload="metadata" aria-label="תמונת המצב"></video>
+      <video src="media/stage-3.mp4" poster="media/stage-3.jpg" muted playsinline preload="metadata" aria-label="ההיערכות"></video>
     </div>
     <div class="fm__ctl">
       <button class="fm__b fm__prev" type="button" aria-label="השלב הקודם"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -690,7 +690,7 @@ var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.discon
 (function(){
 var root=document.getElementById('film'),stage=document.getElementById('filmStg'),canvas=document.getElementById('filmCv');if(!root)return;
 var TITLES=['האתגר','הסריקה','תמונת המצב','ההיערכות'],CAPS=['האתגר מתחיל עוד לפני העלייה למטוס.','זיהוי כבודת היד מסייע לבנות תמונת מצב.','שילוב המידע עם נתוני הקיבולת מאפשר להעריך אם צפוי פער.','כשהפער צפוי מראש, הצוות יכול לבחון כיצד להיערך.'];
-var POSTERS=['media/stage-1.jpg','media/stage-2.jpg','media/stage-3.jpg','media/stage-4.jpg'];
+var POSTERS=['media/stage-1.jpg','media/stage-2.jpg','media/stage-4.jpg','media/stage-3.jpg'];
 var vids=[].slice.call(document.querySelectorAll('#filmVids video')),tabs=[].slice.call(root.querySelectorAll('.fm__tab')),N=4;
 var inf=document.getElementById('filmInf'),ti=document.getElementById('filmTi'),de=document.getElementById('filmDe');
 var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
