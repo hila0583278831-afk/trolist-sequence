@@ -820,6 +820,19 @@ setText(0);setTab(0);
 .pv__tag img{display:block;inline-size:100%;block-size:100%;object-fit:cover}
 .pv__sh{position:absolute;inset-block-end:-14px;inset-inline-start:-14px;display:grid;place-items:center;inline-size:56px;block-size:56px;border-radius:50%;background:linear-gradient(145deg,#a98bff,#6f4be0);color:#fff;box-shadow:0 14px 30px -10px rgba(111,75,224,.9),0 0 0 4px #111126}
 .pv__sh svg{inline-size:28px;block-size:28px}
+.pv--js .pv__k,.pv--js .pv__h,.pv--js .pv__s,.pv--js .pv__p,.pv--js .pv__pt,.pv--js .pv__fig{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.pv--js .pv__pt{transform:translateX(-36px)}
+.pv--js .pv__fig:first-child{transform:translateY(28px) scale(.96)}
+.pv--js.is-in .pv__k,.pv--js.is-in .pv__h,.pv--js.is-in .pv__s,.pv--js.is-in .pv__p,.pv--js.is-in .pv__pt,.pv--js.is-in .pv__fig{opacity:1;transform:none}
+.pv--js.is-in .pv__k{transition-delay:.05s}.pv--js.is-in .pv__h{transition-delay:.15s}.pv--js.is-in .pv__s{transition-delay:.3s}.pv--js.is-in .pv__p{transition-delay:.45s}
+.pv--js.is-in .pv__pt:nth-child(1){transition-delay:.65s}.pv--js.is-in .pv__pt:nth-child(2){transition-delay:.85s}.pv--js.is-in .pv__pt:nth-child(3){transition-delay:1.05s}
+.pv--js.is-in .pv__fig:nth-child(1){transition-delay:.3s}.pv--js.is-in .pv__fig:nth-child(2){transition-delay:.7s}
+.pv__pt{transition:border-color .3s,box-shadow .3s,background .3s}
+.pv--js.is-in .pv__pt{transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .3s}
+.pv__pt:hover{border-color:rgba(169,139,255,.6);box-shadow:0 18px 40px -22px rgba(138,98,245,.8);background:rgba(36,31,82,.8)}
+@keyframes pvsh{0%,100%{box-shadow:0 14px 30px -10px rgba(111,75,224,.9),0 0 0 4px #111126,0 0 0 4px rgba(169,139,255,0)}50%{box-shadow:0 14px 30px -10px rgba(111,75,224,.9),0 0 0 4px #111126,0 0 0 12px rgba(169,139,255,.22)}}
+.pv.is-in .pv__sh{animation:pvsh 3.2s ease-in-out 1.6s infinite}
+@media (prefers-reduced-motion:reduce){.pv--js .pv__k,.pv--js .pv__h,.pv--js .pv__s,.pv--js .pv__p,.pv--js .pv__pt,.pv--js .pv__fig{opacity:1!important;transform:none!important;transition:none!important}.pv.is-in .pv__sh{animation:none}}
 @media (max-width:900px){.pv__in{grid-template-columns:1fr}.pv__vis{order:2}}
 @media (prefers-reduced-motion:reduce){.pv__bp,.pv__tag{rotate:none}}
 </style>
@@ -854,6 +867,11 @@ setText(0);setTab(0);
     </div>
   </div>
 </section>
+<script>
+(function(){var s=document.getElementById('privacy');if(!s)return;s.classList.add('pv--js');
+try{if(!('IntersectionObserver' in window)){s.classList.add('is-in');return}
+var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){s.classList.add('is-in');io.disconnect()}})},{threshold:.2});io.observe(s)}catch(x){s.classList.add('is-in')}})();
+</script>
 <!--pv:end-->
 <!--demo:start-->
 <style id="dm-css">
