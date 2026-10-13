@@ -564,7 +564,7 @@ var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.discon
 <!--ob:end-->
 <!--film:start-->
 <style id="film-css">
-.fm{--fm-v:#8A62F5;--fm-ink:#15153a;--fm-mut:#5d5f86;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,120px) max(20px,6vw) clamp(72px,8vw,120px);color:var(--fm-ink);font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(44% 40% at 85% 18%,rgba(138,98,245,.14),transparent 70%),linear-gradient(180deg,#eee7fd 0,#f6f2ff 45%,#fbf9ff 100%)}
+.fm{--fm-v:#a98bff;--fm-ink:#fff;--fm-mut:#b9b3d6;--fm-line:rgba(169,139,255,.3);position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(64px,8vw,120px) max(20px,6vw) clamp(72px,8vw,120px);color:var(--fm-ink);font-family:var(--font-hebrew,'Rubik',Arial,sans-serif);background:radial-gradient(46% 40% at 82% 14%,rgba(138,98,245,.22),transparent 70%),radial-gradient(40% 36% at 10% 80%,rgba(111,75,224,.13),transparent 70%),#111126}
 .fm *{box-sizing:border-box}
 .fm__in{max-inline-size:1280px;margin-inline:auto}
 .fm__hd{text-align:center;max-inline-size:720px;margin-inline:auto}
@@ -590,15 +590,15 @@ var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){go();o.discon
 .fm.nogl .fm__vids video.on{display:block}
 .fm.nogl .fm__stg{display:none}
 .fm__ctl{display:flex;justify-content:center;align-items:center;gap:10px;margin-block-start:clamp(10px,1.5vw,20px)}
-.fm__b{inline-size:48px;block-size:48px;border-radius:50%;border:1px solid rgba(138,98,245,.35);background:#fff;color:var(--fm-v);display:grid;place-items:center;cursor:pointer;padding:0;transition:background .25s,color .25s,box-shadow .25s}
-.fm__b:hover{background:var(--fm-v);color:#fff;box-shadow:0 10px 24px -10px rgba(111,75,224,.6)}
+.fm__b{inline-size:48px;block-size:48px;border-radius:50%;border:1px solid var(--fm-line);background:transparent;color:#b79cff;display:grid;place-items:center;cursor:pointer;padding:0;transition:background .25s,color .25s,box-shadow .25s}
+.fm__b:hover{background:rgba(138,98,245,.28);border-color:#b79cff;color:#fff;box-shadow:0 0 18px -4px rgba(138,98,245,.55)}
 .fm__b:focus-visible,.fm__tab:focus-visible{outline:2px solid var(--fm-v);outline-offset:3px}
 .fm__b svg{inline-size:20px;block-size:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .fm__pp svg{fill:currentColor;stroke:none}.fm__pp .i2{display:none}.fm.is-playing .fm__pp .i1{display:none}.fm.is-playing .fm__pp .i2{display:block}
 .fm__tabs{list-style:none;margin:clamp(20px,2.4vw,32px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px);max-inline-size:1180px;margin-inline:auto}
 .fm__tab{display:block;inline-size:100%;text-align:start;background:none;border:0;padding:0;cursor:pointer;font:inherit;color:var(--fm-mut);transition:color .3s}
-.fm__tab::before{content:"";display:block;block-size:3px;border-radius:3px;background:linear-gradient(270deg,var(--fm-v) calc(var(--p,0)*100%),rgba(138,98,245,.2) calc(var(--p,0)*100%));margin-block-end:12px}
-.fm__tab span{display:block;font-size:12.5px;letter-spacing:.14em;color:var(--fm-v);margin-block-end:2px}
+.fm__tab::before{content:"";display:block;block-size:3px;border-radius:3px;background:linear-gradient(270deg,var(--fm-v) calc(var(--p,0)*100%),rgba(183,156,255,.2) calc(var(--p,0)*100%));margin-block-end:12px}
+.fm__tab span{display:block;font-size:12.5px;letter-spacing:.14em;color:#b79cff;margin-block-end:2px}
 .fm__tab b{font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(15px,1.3vw,20px)}
 .fm__tab[aria-selected="true"]{color:var(--fm-ink)}
 .fm__note{margin:clamp(20px,2.4vw,32px) 0 0;text-align:center;font-size:13.5px;line-height:1.7;color:var(--fm-mut)}
@@ -736,7 +736,7 @@ function render(){var a=st.width/st.height,f=1/Math.tan(FOV/2),n=.05,fa=50;
 var P=new Float32Array([f/a,0,0,0,0,f,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0]);
 gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.useProgram(program);
 var q=st.orientation;gl.uniform4f(U.uOrientation,q[0],q[1],q[2],q[3]);gl.uniformMatrix4fv(U.uProjection,false,P);gl.uniform1f(U.uCamera,st.camera);gl.uniform1f(U.uRadius,RADIUS);gl.uniform1f(U.uTileRadius,tileR());gl.uniform4f(U.uSpin,st.axis[0],st.axis[1],st.axis[2],reduce?0:st.speed);gl.uniform1f(U.uStretch,S.stretch);gl.uniform1f(U.uShift,st.shift);gl.uniform1f(U.uCells,atlas.cells);gl.uniform1f(U.uInset,2/atlas.cell);gl.uniform1f(U.uRoundness,S.roundness);gl.uniform1f(U.uGrayscale,S.grayscale);gl.uniform1f(U.uDim,S.dim*(.45+.55*st.settle));gl.uniform1f(U.uReveal,st.reveal);
-gl.uniform3f(U.uPlaceholder,.9,.88,.96);gl.uniform3f(U.uTone,.96,.94,1);
+gl.uniform3f(U.uPlaceholder,.1,.1,.2);gl.uniform3f(U.uTone,.067,.067,.15);
 gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex);gl.bindVertexArray(vao);gl.drawElementsInstanced(gl.TRIANGLES,indices.length,gl.UNSIGNED_SHORT,0,st.tiles.length);gl.bindVertexArray(null)}
 function wake(){if(raf||!alive||!vis)return;raf=requestAnimationFrame(frame)}
 canvas.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId);drag.active=true;drag.id=e.pointerId;drag.x=e.clientX;drag.y=e.clientY;drag.dx=drag.dy=drag.moved=0;drag.start=performance.now();st.target=-1;wake()});
