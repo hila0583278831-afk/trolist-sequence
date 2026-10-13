@@ -898,7 +898,8 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
 </section>
 <script>
 (function(){var r=document.getElementById('pricing');if(!r)return;
-var M={perMin:180,license:5900,setup:25000,tag:1.2,months:12};
+var EUR_PER_MIN=25,EUR_ILS=3.44; /* €25 per saved minute, converted at a fixed rate of ₪3.44 per € (ECB-style mid-market, Oct 2026) */
+var M={perMin:EUR_PER_MIN*EUR_ILS,license:5900,setup:25000,tag:1.2,months:12};
 function calc(f,m,t){var v=f*m*M.perMin*M.months,l=M.license*M.months,g=f*t*M.tag*M.months,tot=M.setup+l+g;return{value:v,license:l,tags:g,total:tot,gap:v-tot}}
 var fmt=new Intl.NumberFormat('he-IL',{style:'currency',currency:'ILS',maximumFractionDigits:0});
 function money(n){return fmt.format(Math.round(n))}
