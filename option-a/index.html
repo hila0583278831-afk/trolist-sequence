@@ -24,7 +24,7 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
   direction:rtl;
 }
 .hero>*{position:absolute}
-.dots{
+.dots{display:none;
   left:calc(var(--u)*89);top:calc(var(--u)*367);width:calc(var(--u)*30);height:calc(var(--u)*208);
   box-sizing:border-box;border:calc(var(--u)*1.4) solid var(--ink);border-radius:calc(var(--u)*15);
 }
@@ -53,7 +53,7 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
 }
 .copy .en{font-family:var(--font-wide);font-size:.86em;letter-spacing:0}
 
-.lanyard-stage{left:0;top:0;width:100%;height:calc(var(--u)*1100)}
+.lanyard-stage{left:0;top:0;width:100%;height:100%}
 .lanyard{position:relative;width:100%;height:100%;overflow:hidden}
 .lanyard-canvas{display:block;width:100%;height:100%}
 .copy{pointer-events:none}
@@ -180,6 +180,56 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
 </style>
 
 <nav class="optsw" aria-label="אופציות עיצוב"><a href="https://claude.ai/artifact/6g6Dru5gUv4GZ6LuoHAnnc" target="_blank" rel="noopener" aria-current="page">אופציה א׳</a><a href="https://claude.ai/artifact/MByW5ecQNBDXNx3uQPpxZW" target="_blank" rel="noopener">אופציה ב׳</a></nav>
+<style id="sn-css">
+.sn{position:fixed;z-index:900;inset-inline-start:auto;left:clamp(16px,3.4vw,64px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 3px;border-radius:999px;background:rgba(17,17,38,.58);border:1px solid rgba(169,139,255,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 28px -10px rgba(40,20,110,.5)}
+.sn button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;place-items:center;width:24px;height:20px;border-radius:50%}
+.sn button i{display:block;width:7px;height:7px;border-radius:50%;background:#8A62F5;transition:background .3s,transform .3s,box-shadow .3s}
+.sn button:hover i{background:#b79cff;transform:scale(1.25)}
+.sn button[aria-current="true"] i{background:#fff;transform:scale(1.35);box-shadow:0 0 10px rgba(255,255,255,.55)}
+.sn button:focus-visible{outline:2px solid #fff;outline-offset:1px}
+@media (max-width:860px){.sn{display:none}}
+@media (prefers-reduced-motion:reduce){.sn button i{transition:none}}
+</style>
+<nav class="sn" id="sn" aria-label="ניווט בין חלקי העמוד" dir="rtl"></nav>
+<script>
+(function(){function init(){
+  var SEC=[['hero','פתיחה'],['gap2','האתגר התפעולי'],['seq','איך מורכבת המדבקה'],['s3','מדבקה אחת, תמונה תפעולית'],['s4','המסע של TrolList'],['ob','זיהוי מוקדם והיערכות בזמן'],['film','מהתג ועד להחלטה'],['pricing','תמחור']];
+  var nav=document.getElementById('sn'),xf=document.getElementById('xfer');
+  var rm=matchMedia('(prefers-reduced-motion: reduce)');
+  function el(id){return id==='hero'?document.querySelector('.hero'):document.getElementById(id)}
+  var btns=SEC.map(function(s,i){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label',s[1]);b.title=s[1];b.innerHTML='<i></i>';b.addEventListener('click',function(){go(s[0])});nav.appendChild(b);return b});
+  function pinned(){return xf&&xf.classList.contains('xfer--pin')}
+  function goY(id){
+    var y;
+    if(pinned()&&(id==='hero'||id==='gap2')){var t=xf.getBoundingClientRect().top+scrollY,travel=xf.offsetHeight-innerHeight;y=t+(id==='gap2'?travel*.75:0)}
+    else{var e=el(id);if(!e)return null;y=e.getBoundingClientRect().top+scrollY}
+    return Math.max(0,Math.round(y));
+  }
+  function go(id){var y=goY(id);if(y==null)return;scrollTo({top:y,behavior:rm.matches?'auto':'smooth'})}
+  window.trolistGoTo=go;
+  document.querySelectorAll('[data-goto]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();go(a.getAttribute('data-goto'))})});
+  var cur=-1,tick=0;
+  function active(){
+    tick=0;var line=innerHeight*.45,idx=0;
+    for(var i=0;i<SEC.length;i++){
+      var id=SEC[i][0];
+      if(pinned()&&(id==='hero'||id==='gap2')){
+        var r=xf.getBoundingClientRect();
+        if(r.top<=line&&r.bottom>line){var g=window.__g2;idx=(g&&g.p>.4)?1:0;}
+        else if(r.top<=line)idx=1;
+        continue;
+      }
+      var e=el(id);if(e&&e.getBoundingClientRect().top<=line)idx=i;
+    }
+    if(idx!==cur){cur=idx;btns.forEach(function(b,i){if(i===idx)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
+  }
+  function req(){if(!tick)tick=requestAnimationFrame(active)}
+  addEventListener('scroll',req,{passive:true});addEventListener('resize',req,{passive:true});
+  active();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 <div class="xfer" id="xfer"><div class="xfer__pin"><div class="xfer__strip" id="xferStrip"><div class="xfer__p xfer__p2"><section class="gap2" id="gap2" dir="rtl" aria-labelledby="gap2-h">
   <div class="gap2__pin">
     <div class="gap2__top" aria-hidden="true"></div>
@@ -204,7 +254,7 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
   <div class="wordmark"><img src="wordmark-clean.png" alt="TROLIST"></div>
   <div class="lanyard-stage"><div class="lanyard" id="lanyard"></div></div>
   <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <a class="cta" href="#">גלו את <span class="en">TROLIST</span></a>
+  <a class="cta" href="#gap2" data-goto="gap2">גלו את <span class="en">TROLIST</span></a>
   <p class="copy">הכירו דרך חכמה יותר<br>להתחיל את המסע שלכם.<br><br><span class="en">TROLIST</span> מביאה חדשנות לעולם הנסיעות<br>עם פתרון טכנולוגי חכם שנועד להפוך<br>את תהליך הצ'ק־אין והעלייה למטוס<br>לפשוט,נוח ויעיל יותר.</p>
 </section>
 </div><div class="xfer__seam" aria-hidden="true"></div></div></div></div>
@@ -2116,7 +2166,7 @@ mountLanyard(document.getElementById('lanyard'), {
   cardColor: '#ffffff',
   finish: 'glossy',
   cornerRadius: 0.68,
-  size: 0.29,
+  size: 0.339,
   anchor: 0.574,
   strapLength: 1,
   strapColor: '#e8e8ee',
