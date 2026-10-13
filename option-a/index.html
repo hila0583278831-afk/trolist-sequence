@@ -193,7 +193,7 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
 <nav class="sn" id="sn" aria-label="ניווט בין חלקי העמוד" dir="rtl"></nav>
 <script>
 (function(){function init(){
-  var SEC=[['hero','פתיחה'],['gap2','האתגר התפעולי'],['seq','איך מורכבת המדבקה'],['s3','מדבקה אחת, תמונה תפעולית'],['s4','המסע של TrolList'],['ob','זיהוי מוקדם והיערכות בזמן'],['film','מהתג ועד להחלטה'],['pricing','תמחור']];
+  var SEC=[['hero','פתיחה'],['gap2','האתגר התפעולי'],['seq','איך מורכבת המדבקה'],['s3','מדבקה אחת, תמונה תפעולית'],['s4','המסע של TrolList'],['ob','זיהוי מוקדם והיערכות בזמן'],['film','מהתג ועד להחלטה'],['demo','סרטון הדגמה'],['pricing','תמחור']];
   var nav=document.getElementById('sn'),xf=document.getElementById('xfer');
   var rm=matchMedia('(prefers-reduced-motion: reduce)');
   function el(id){return id==='hero'?document.querySelector('.hero'):document.getElementById(id)}
@@ -805,6 +805,35 @@ setText(0);setTab(0);
 })();
 </script>
 <!--film:end-->
+<!--demo:start-->
+<style id="dm-css">
+.dm{position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(56px,6vw,96px) max(20px,6vw) 0;background:radial-gradient(46% 50% at 50% 30%,rgba(138,98,245,.2),transparent 72%),radial-gradient(46% 400px at 82% calc(100% + 80px),rgba(138,98,245,.2),transparent 70%),#111126}
+.dm__in{max-inline-size:1120px;margin-inline:auto}
+.dm__fr{position:relative;border-radius:clamp(16px,2vw,26px);padding:clamp(6px,.8vw,10px);background:linear-gradient(160deg,rgba(169,139,255,.22),rgba(169,139,255,.06));border:1px solid rgba(169,139,255,.32);box-shadow:0 40px 90px -36px rgba(111,75,224,.6),0 0 0 1px rgba(17,17,38,.6) inset}
+.dm__v{position:relative;overflow:hidden;border-radius:clamp(11px,1.4vw,18px);background:#0a0a22;aspect-ratio:16/9}
+.dm__v video{display:block;inline-size:100%;block-size:100%;object-fit:cover}
+.dm__pl{all:unset;box-sizing:border-box;cursor:pointer;position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(40% 40% at 50% 50%,rgba(17,17,38,.35),transparent 70%);transition:opacity .35s}
+.dm__pl span{display:grid;place-items:center;inline-size:clamp(60px,7vw,92px);block-size:clamp(60px,7vw,92px);border-radius:50%;border:1px solid rgba(183,156,255,.7);background:rgba(17,17,38,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 0 34px -4px rgba(138,98,245,.7);transition:transform .25s,box-shadow .25s,background .25s}
+.dm__pl:hover span{transform:scale(1.07);background:rgba(138,98,245,.35);box-shadow:0 0 46px 0 rgba(138,98,245,.8)}
+.dm__pl:focus-visible span{outline:2px solid #fff;outline-offset:3px}
+.dm__pl svg{inline-size:34%;block-size:34%;fill:#b79cff;margin-inline-start:6%}
+.dm.is-on .dm__pl{opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.dm__pl span{transition:none}}
+</style>
+<section class="dm" id="demo" dir="rtl" lang="he" aria-label="סרטון הדגמה">
+  <div class="dm__in"><div class="dm__fr"><div class="dm__v">
+    <video id="dmVid" preload="metadata" playsinline poster="media/demo-poster.jpg" aria-label="סרטון הדגמה של TrolList"><source src="media/demo.mp4" type="video/mp4"></video>
+    <button class="dm__pl" id="dmPl" type="button" aria-label="הפעלת הסרטון"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span></button>
+  </div></div></div>
+</section>
+<script>
+(function(){var s=document.getElementById('demo'),v=document.getElementById('dmVid'),b=document.getElementById('dmPl');if(!s||!v||!b)return;
+b.addEventListener('click',function(){s.classList.add('is-on');v.controls=true;var p=v.play();if(p&&p.catch)p.catch(function(){});});
+v.addEventListener('ended',function(){v.controls=false;s.classList.remove('is-on');v.load();});
+try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.pause();},{threshold:.15}).observe(s);}catch(e){}
+})();
+</script>
+<!--demo:end-->
 <!--pricing:start-->
 <style id="pr-css">
 .pr{--pr-bg:#111126;--pr-card:#1a1a38;--pr-card2:#20204a;--pr-line:rgba(169,139,255,.22);--pr-v:#8A62F5;--pr-vl:#b79cff;--pr-mut:#b9b3d6;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(72px,8vw,128px) max(20px,6vw) clamp(88px,9vw,144px);background:radial-gradient(46% 40% at 82% 8%,rgba(138,98,245,.2),transparent 70%),radial-gradient(40% 36% at 8% 62%,rgba(111,75,224,.13),transparent 70%),var(--pr-bg);color:#fff;font-family:var(--font-hebrew,'Rubik',Arial,sans-serif)}
