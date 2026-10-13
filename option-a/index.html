@@ -900,6 +900,24 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
 .pr__btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px -14px rgba(111,75,224,.9)}
 @media (max-width:960px){.pr__cards{grid-template-columns:1fr}.pr__calc{grid-template-columns:1fr}.pr__cta{flex-direction:column;align-items:flex-start}}
 @media (prefers-reduced-motion:reduce){.pr__btn,.pr__n{transition:none}.pr__btn:hover{transform:none}}
+/* light theme */
+.pr{--pr-bg:#f6f2ff;--pr-card:#fff;--pr-card2:#f4f0ff;--pr-line:rgba(138,98,245,.22);--pr-v:#8A62F5;--pr-vl:#6f4be0;--pr-mut:#5d5f86;color:#15153a;background:radial-gradient(50% 40% at 18% 78%,rgba(138,98,245,.14),transparent 70%),radial-gradient(40% 30% at 85% 12%,rgba(138,98,245,.10),transparent 70%),linear-gradient(180deg,#fff 0,#f6f2ff 45%,#eee7fd 100%)}
+.pr__price,.pr__fl,.pr__res b,.pr__bh b,.pr__n{color:#15153a}
+.pr__panel,.pr__card{box-shadow:0 24px 60px -36px rgba(70,40,160,.35)}
+.pr__n{background:#f4f0ff}
+.pr__n:hover{border-color:rgba(138,98,245,.55)}
+.pr__eur{color:#6f4be0}
+.pr__wide .pr__ch{background:#f8f5ff}
+.pr__ch figcaption,.pr__st h4,.pr__gap span{color:#15153a}
+.pr__gap{background:linear-gradient(180deg,rgba(138,98,245,.16),rgba(138,98,245,.06));border-color:rgba(138,98,245,.35)}
+.pr__gap b{color:#15153a}
+.pr__disc{color:#15153a;background:linear-gradient(135deg,rgba(138,98,245,.16),rgba(138,98,245,.05));border-color:rgba(138,98,245,.4);border-inline-start-color:#8A62F5;box-shadow:0 24px 60px -34px rgba(111,75,224,.5)}
+.pr__cta{background:linear-gradient(120deg,#fff,#f1ebff)}
+.pr__cta h3{color:#15153a}
+.pr__sv text{fill:#5d5f86}
+.pr__sv line[stroke^="rgba(255,255,255,.0"]{stroke:rgba(21,21,58,.08)}
+.pr__sv line[stroke^="rgba(255,255,255,.5"]{stroke:rgba(21,21,58,.45)}
+.pr__sv circle[fill="#fff"]{fill:#fff}
 </style>
 <section class="pr" id="pricing" dir="rtl" lang="he" aria-labelledby="prh">
   <div class="pr__in">
