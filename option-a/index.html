@@ -2720,4 +2720,20 @@ import * as THREE from './three.module.js';
   frame(performance.now()); if(!reduce) raf=requestAnimationFrame(loop);
 })();
 </script>
-
+<script>
+(function(){
+  var els=document.querySelectorAll('.pr__price'); if(!els.length||!('IntersectionObserver' in window))return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  function fmt(v,dec){var s=v.toFixed(dec),p=s.split('.');p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');return p.join('.');}
+  function run(el){
+    var n=el.firstChild; if(!n||n.nodeType!==3)return;
+    var m=n.nodeValue.match(/^(\D*)([\d,]+(?:\.(\d+))?)(.*)$/s); if(!m)return;
+    var pre=m[1],end=parseFloat(m[2].replace(/,/g,'')),dec=m[3]?m[3].length:0,post=m[4],t0=null,D=1400;
+    function step(t){if(t0===null)t0=t;var k=Math.min(1,(t-t0)/D),e=k>=1?1:1-Math.pow(2,-9*k);
+      n.nodeValue=pre+fmt(end*e,dec)+post; if(k<1)requestAnimationFrame(step);}
+    n.nodeValue=pre+fmt(0,dec)+post; requestAnimationFrame(step);
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target);}});},{threshold:.6});
+  els.forEach(function(el){io.observe(el);});
+})();
+</script>
