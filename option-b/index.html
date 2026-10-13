@@ -817,6 +817,7 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
 .pr{--pr-bg:#111126;--pr-card:#1a1a38;--pr-card2:#20204a;--pr-line:rgba(169,139,255,.22);--pr-v:#8A62F5;--pr-vl:#b79cff;--pr-mut:#b9b3d6;position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(72px,8vw,128px) max(20px,6vw) clamp(88px,9vw,144px);background:radial-gradient(46% 40% at 82% 8%,rgba(138,98,245,.2),transparent 70%),radial-gradient(40% 36% at 8% 62%,rgba(111,75,224,.13),transparent 70%),var(--pr-bg);color:#fff;font-family:var(--font-hebrew,'Rubik',Arial,sans-serif)}
 .pr *{box-sizing:border-box}
 .pr__in{max-inline-size:1180px;margin-inline:auto}
+.pr__eur{margin:-4px 0 18px;font-size:clamp(13px,1vw,15px);color:#b79cff;font-weight:500}
 .pr__hd{max-inline-size:760px}
 .pr__h{margin:0;font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(30px,4vw,62px);line-height:1.1;text-wrap:balance}
 .pr__p{margin:clamp(14px,1.6vw,22px) 0 0;max-inline-size:40em;font-size:clamp(16px,1.3vw,20px);line-height:1.7;color:var(--pr-mut)}
@@ -874,6 +875,7 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
         <h3 class="pr__ph" id="prph">התאימו את ההנחות</h3>
         <label class="pr__f"><span class="pr__fl">מספר טיסות בחודש</span><input class="pr__n" id="prFlights" type="number" inputmode="numeric" min="0" step="1" value="150"></label>
         <label class="pr__f"><span class="pr__fl">דקות תפעול אפשריות לחיסכון בטיסה <output id="prMinOut" for="prMin">3</output></span><input class="pr__r" id="prMin" type="range" min="3" max="5" step="0.1" value="3"><span class="pr__rs" aria-hidden="true"><span>3</span><span>5</span></span></label>
+        <p class="pr__eur">שווי משוער: €25 לדקת חיסכון</p>
         <label class="pr__f"><span class="pr__fl">מספר תגי RFID לטיסה</span><input class="pr__n" id="prTags" type="number" inputmode="numeric" min="0" step="1" value="50"></label>
       </form>
       <div class="pr__panel" aria-live="polite">
