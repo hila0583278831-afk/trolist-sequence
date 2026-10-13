@@ -855,7 +855,7 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
 .pr__bt i{display:block;block-size:100%;min-inline-size:0;border-radius:6px;transition:inline-size .45s cubic-bezier(.2,.7,.2,1)}
 .pr__bt .v{background:linear-gradient(90deg,#8A62F5,#b79cff)}
 .pr__bt .s{background:#4fd1c5}.pr__bt .l{background:#f5b85c}.pr__bt .t{background:#ff8a7a}
-.pr__st{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--pr-line)}
+.pr__st{margin-block-start:clamp(20px,2vw,32px)}
 .pr__st h4{margin:0 0 4px;font-size:clamp(14px,1.05vw,16px);font-weight:500;color:#e5dffa}
 .pr__st p{margin:0 0 10px;font-size:13px;color:var(--pr-mut)}
 .pr__sv{position:relative;direction:ltr}
@@ -911,12 +911,12 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
           <figcaption>ערך תפעולי מול עלות בשנה הראשונה</figcaption>
           <div class="pr__bar"><div class="pr__bh"><span>ערך תפעולי שנתי משוער</span><b id="chVn">—</b></div><div class="pr__bt"><i class="v" id="chV"></i></div></div>
           <div class="pr__bar"><div class="pr__bh"><span>עלות כוללת משוערת בשנה הראשונה</span><b id="chTn">—</b></div><div class="pr__bt"><i class="s" id="chS"></i><i class="l" id="chL"></i><i class="t" id="chT"></i></div></div>
-          <ul class="pr__lg"><li><i style="background:#4fd1c5"></i>הקמה חד-פעמית <span id="lgS"></span></li><li><i style="background:#f5b85c"></i>דמי עלות שנתיים <span id="lgL"></span></li><li><i style="background:#ff8a7a"></i>תגי RFID <span id="lgT"></span></li></ul><div class="pr__st"><h4>המאזן המצטבר לאורך השנה</h4><p id="stSub"></p><div class="pr__sv" id="stV"><svg id="stSvg" viewBox="0 0 600 220" role="img" aria-label="גרף מאזן מצטבר"></svg><div class="tip" id="stTip"></div></div></div>
+          <ul class="pr__lg"><li><i style="background:#4fd1c5"></i>הקמה חד-פעמית <span id="lgS"></span></li><li><i style="background:#f5b85c"></i>דמי עלות שנתיים <span id="lgL"></span></li><li><i style="background:#ff8a7a"></i>תגי RFID <span id="lgT"></span></li></ul>
         </figure>
         <div class="pr__gap"><span>פער משוער בין הערך התפעולי לעלות בשנה הראשונה</span><b id="prGap">—</b><em>הנתון הוא הערכה מבוססת מודל, לא תוצאה שנמדדה או מובטחת. העלות כוללת הקמה חד-פעמית של ₪25,000.</em></div>
       </div>
     </div>
-    <div class="pr__cta">
+    <div class="pr__st pr__panel"><h4>המאזן המצטבר לאורך השנה</h4><p id="stSub"></p><div class="pr__sv" id="stV"><svg id="stSvg" viewBox="0 0 1200 320" role="img" aria-label="גרף מאזן מצטבר"></svg><div class="tip" id="stTip"></div></div></div><div class="pr__cta">
       <div><h3>התעניינו בפיילוט?</h3><p>בואו נבחן יחד אם TrolList מתאים לתהליכי העבודה ולקיבולת הכבודה אצלכם.</p></div>
       <!-- CTA: no contact section/route exists yet. Connect by turning this into <a href="#contact"> (or a mailto/route) once a destination exists. -->
       <button class="pr__btn" type="button" data-cta="pilot">בואו נדבר על פיילוט</button>
@@ -935,17 +935,17 @@ var F=document.getElementById('prFlights'),Mn=document.getElementById('prMin'),T
 function num(el,int){var x=parseFloat(el.value);if(!isFinite(x)||x<0)x=0;return int?Math.floor(x):x}
 
 function stock(c){var N=12,pts=[],mn=1/0,mx=-1/0,k,v;for(k=0;k<=N;k++){v=c.value/N*k-(M.setup+(c.license+c.tags)/N*k);pts.push(v);mn=Math.min(mn,v);mx=Math.max(mx,v)}
-mn=Math.min(mn,0);mx=Math.max(mx,0);var W=600,H=220,pt=14,pb=24,rg=mx-mn||1,X=function(i){return i/N*W},Y=function(y){return pt+(mx-y)/rg*(H-pt-pb)},z=Y(0),d='',i;
+mn=Math.min(mn,0);mx=Math.max(mx,0);var W=1200,H=320,pt=14,pb=24,rg=mx-mn||1,X=function(i){return i/N*W},Y=function(y){return pt+(mx-y)/rg*(H-pt-pb)},z=Y(0),d='',i;
 for(i=0;i<=N;i++)d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(pts[i]).toFixed(1);
 var be=-1;for(i=1;i<=N;i++)if(pts[i-1]<0&&pts[i]>=0){be=i-1+(-pts[i-1])/(pts[i]-pts[i-1]);break}
-var up=pts[N]>=0,col=up?'#4fd1c5':'#ff8a7a',s='<defs><linearGradient id="stG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+col+'" stop-opacity=".45"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></linearGradient><clipPath id="stCl"><rect x="0" y="0" width="600" height="'+z.toFixed(1)+'"/></clipPath></defs>';
-for(i=0;i<4;i++){var gy=pt+i*(H-pt-pb)/3;s+='<line x1="0" x2="600" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="rgba(255,255,255,.07)"/>'}
-s+='<path d="'+d+'L600 '+z.toFixed(1)+'L0 '+z.toFixed(1)+'Z" fill="url(#stG)"/>';
-s+='<line x1="0" x2="600" y1="'+z.toFixed(1)+'" y2="'+z.toFixed(1)+'" stroke="rgba(255,255,255,.55)" stroke-dasharray="5 5"/>';
+var up=pts[N]>=0,col=up?'#4fd1c5':'#ff8a7a',s='<defs><linearGradient id="stG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+col+'" stop-opacity=".45"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></linearGradient><clipPath id="stCl"><rect x="0" y="0" width="1200" height="'+z.toFixed(1)+'"/></clipPath></defs>';
+for(i=0;i<4;i++){var gy=pt+i*(H-pt-pb)/3;s+='<line x1="0" x2="1200" y1="'+gy.toFixed(1)+'" y2="'+gy.toFixed(1)+'" stroke="rgba(255,255,255,.07)"/>'}
+s+='<path d="'+d+'L1200 '+z.toFixed(1)+'L0 '+z.toFixed(1)+'Z" fill="url(#stG)"/>';
+s+='<line x1="0" x2="1200" y1="'+z.toFixed(1)+'" y2="'+z.toFixed(1)+'" stroke="rgba(255,255,255,.55)" stroke-dasharray="5 5"/>';
 s+='<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>';
 if(be>0)s+='<circle cx="'+X(be).toFixed(1)+'" cy="'+z.toFixed(1)+'" r="6" fill="#fff" stroke="'+col+'" stroke-width="3" vector-effect="non-scaling-stroke"/>';
-s+='<circle cx="600" cy="'+Y(pts[N]).toFixed(1)+'" r="6" fill="'+col+'" vector-effect="non-scaling-stroke"/>';
-for(i=0;i<=N;i+=1)s+='<text x="'+X(i).toFixed(1)+'" y="214" fill="#9a93c0" font-size="11" text-anchor="'+(i==0?'start':i==N?'end':'middle')+'">'+(i%3==0?i:'')+'</text>';
+s+='<circle cx="1200" cy="'+Y(pts[N]).toFixed(1)+'" r="6" fill="'+col+'" vector-effect="non-scaling-stroke"/>';
+for(i=0;i<=N;i+=1)s+='<text x="'+X(i).toFixed(1)+'" y="312" fill="#9a93c0" font-size="14" text-anchor="'+(i==0?'start':i==N?'end':'middle')+'">'+(i%3==0?i:'')+'</text>';
 document.getElementById('stSvg').innerHTML=s;
 document.getElementById('stSub').textContent=be>0?'נקודת איזון אחרי כ-'+Math.ceil(be)+' חודשים · מאזן בסוף שנה: '+money(pts[N]):'מאזן בסוף שנה: '+money(pts[N]);
 var sv=document.getElementById('stV'),tp=document.getElementById('stTip');
