@@ -873,7 +873,7 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
       <form class="pr__panel" onsubmit="return false" aria-labelledby="prph">
         <h3 class="pr__ph" id="prph">התאימו את ההנחות</h3>
         <label class="pr__f"><span class="pr__fl">מספר טיסות בחודש</span><input class="pr__n" id="prFlights" type="number" inputmode="numeric" min="0" step="1" value="150"></label>
-        <label class="pr__f"><span class="pr__fl">דקות תפעול אפשריות לחיסכון בטיסה <output id="prMinOut" for="prMin">1</output></span><input class="pr__r" id="prMin" type="range" min="0" max="3" step="0.1" value="1"><span class="pr__rs" aria-hidden="true"><span>0</span><span>3</span></span></label>
+        <label class="pr__f"><span class="pr__fl">דקות תפעול אפשריות לחיסכון בטיסה <output id="prMinOut" for="prMin">3</output></span><input class="pr__r" id="prMin" type="range" min="3" max="5" step="0.1" value="3"><span class="pr__rs" aria-hidden="true"><span>3</span><span>5</span></span></label>
         <label class="pr__f"><span class="pr__fl">מספר תגי RFID לטיסה</span><input class="pr__n" id="prTags" type="number" inputmode="numeric" min="0" step="1" value="50"></label>
       </form>
       <div class="pr__panel" aria-live="polite">
@@ -904,7 +904,7 @@ var fmt=new Intl.NumberFormat('he-IL',{style:'currency',currency:'ILS',maximumFr
 function money(n){return fmt.format(Math.round(n))}
 var F=document.getElementById('prFlights'),Mn=document.getElementById('prMin'),T=document.getElementById('prTags'),mo=document.getElementById('prMinOut');
 function num(el,int){var x=parseFloat(el.value);if(!isFinite(x)||x<0)x=0;return int?Math.floor(x):x}
-function upd(){var f=num(F,true),m=Math.min(3,num(Mn)),t=num(T,true),c=calc(f,m,t);
+function upd(){var f=num(F,true),m=Math.min(5,Math.max(3,num(Mn))),t=num(T,true),c=calc(f,m,t);
 mo.textContent=(Math.round(m*10)/10).toLocaleString('he-IL');
 document.getElementById('prVal').textContent=money(c.value);document.getElementById('prLic').textContent=money(c.license);document.getElementById('prTag').textContent=money(c.tags);document.getElementById('prTot').textContent=money(c.total);document.getElementById('prGap').textContent=money(c.gap)}
 [F,T].forEach(function(el){el.addEventListener('input',upd);el.addEventListener('blur',function(){var x=num(el,true);if(el.value!==''&&String(x)!==el.value)el.value=x;upd()});el.addEventListener('keydown',function(e){if(e.key==='-'||e.key==='e'||e.key==='+'||e.key==='.')e.preventDefault()})});
