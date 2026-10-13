@@ -857,6 +857,24 @@ setText(0);setTab(0);
 @keyframes pvsh{0%,100%{box-shadow:0 14px 30px -10px rgba(111,75,224,.9),0 0 0 4px #111126,0 0 0 4px rgba(169,139,255,0)}50%{box-shadow:0 14px 30px -10px rgba(111,75,224,.9),0 0 0 4px #111126,0 0 0 12px rgba(169,139,255,.22)}}
 .pv.is-in .pv__sh{animation:pvsh 3.2s ease-in-out 1.6s infinite}
 @media (prefers-reduced-motion:reduce){.pv--js .pv__k,.pv--js .pv__h,.pv--js .pv__s,.pv--js .pv__p,.pv--js .pv__pt,.pv--js .pv__fig{opacity:1!important;transform:none!important;transition:none!important}.pv.is-in .pv__sh{animation:none}}
+.pv__bp{position:relative;overflow:hidden}
+.pv__bp::after{content:"";position:absolute;inset-block:-20%;inset-inline-start:-40%;inline-size:30%;background:linear-gradient(100deg,transparent,rgba(138,98,245,.16),rgba(255,255,255,.7),transparent);transform:skewX(-18deg);pointer-events:none;opacity:0}
+@keyframes pvfl{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes pvfl2{0%,100%{translate:0 0}50%{translate:0 9px}}
+@keyframes pvwb{0%,100%{rotate:3deg}50%{rotate:.5deg}}
+@keyframes pvsw{0%,62%{inset-inline-start:-40%;opacity:0}66%{opacity:1}92%{opacity:1}100%{inset-inline-start:130%;opacity:0}}
+@keyframes pvpop{0%{scale:0;rotate:-40deg}60%{scale:1.25;rotate:8deg}100%{scale:1;rotate:0deg}}
+@keyframes pvbl{0%,100%{opacity:.9}50%{opacity:.45}}
+.pv.is-in .pv__bp{animation:pvfl 6s ease-in-out 1.4s infinite}
+.pv.is-in .pv__bp::after{animation:pvsw 6s ease-in-out 1.4s infinite}
+.pv.is-in .pv__bar{animation:pvbl 3s ease-in-out 1.4s infinite}
+.pv.is-in .pv__tagw{animation:pvfl2 5.2s ease-in-out 1.6s infinite}
+.pv.is-in .pv__tag{animation:pvwb 5.2s ease-in-out 1.6s infinite}
+.pv.is-in .pv__sh{animation:pvpop .7s cubic-bezier(.3,1.6,.5,1) 1.3s both,pvsh 3.2s ease-in-out 2.2s infinite}
+.pv--js .pv__fig:first-child{transform:translate(0,-40px) scale(.94) rotate(-4deg)}
+.pv--js .pv__fig:nth-child(2){transform:translateY(60px) scale(.9)}
+.pv--js.is-in .pv__fig{transition-duration:1.1s;transition-timing-function:cubic-bezier(.3,1.35,.5,1)}
+@media (prefers-reduced-motion:reduce){.pv.is-in .pv__bp,.pv.is-in .pv__bp::after,.pv.is-in .pv__bar,.pv.is-in .pv__tagw,.pv.is-in .pv__tag,.pv.is-in .pv__sh{animation:none}}
 @media (max-width:900px){.pv__in{grid-template-columns:1fr}.pv__vis{order:2}}
 @media (prefers-reduced-motion:reduce){.pv__bp,.pv__tag{rotate:none}}
 </style>
