@@ -99,7 +99,7 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
   .xfer--pin .xfer__strip{flex-direction:row;direction:ltr;position:absolute;left:0;top:0;width:200%;height:100%;transform:translate3d(-50%,0,0);will-change:transform}
   .xfer--pin .xfer__p{flex:0 0 50%;width:50%;height:100%;overflow:hidden;position:relative}
   .xfer--pin .xfer__p1{order:0;background:#fff}
-  .xfer--pin .xfer__p1 .hero{position:relative}
+  .xfer--pin .xfer__p1 .hero{position:relative;height:min(100%,calc(var(--H)*1.2))}  /* fill the empty band under the hero on 16:10 / taller windows (art stretches <=20%) */
   .xfer--pin .xfer__p2{overflow:hidden}
   .xfer--pin .gap2{height:100%}
   .xfer--pin .gap2__pin{height:100%;min-height:0;padding-block:0}
