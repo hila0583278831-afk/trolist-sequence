@@ -1,5 +1,6 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TROLIST Hero</title>
+<link rel="modulepreload" href="./three.module.js">
+<title>TROLIST | זיהוי מוקדם של עומס כבודת יד בגייט</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
@@ -161,6 +162,14 @@ body{color:var(--ink);font-family:var(--font-hebrew)}
 }
 
 /* ---------- hero → Section 02 transition: one pinned strip, two panels ---------- */
+@media (max-width:860px){
+  .hero{--u:calc(100cqw / 700);aspect-ratio:auto;height:min(82svh,760px);min-height:520px;background-size:cover}
+  .hero .wordmark{left:5%;width:90%;top:19%}
+  .hero .cta{left:auto;right:16px;top:14px;width:auto;height:44px;padding:0 20px;font-size:17px;border-width:1.5px;border-radius:22px}
+  .hero .copy{left:20px;right:20px;top:auto;bottom:22px;font-size:16px;line-height:1.5;letter-spacing:.01em;white-space:normal;text-shadow:0 0 12px rgba(255,255,255,.7)}
+  .gap2__top{height:auto;min-height:0;padding-block:0}
+}
+.offs,.offs *{animation-play-state:paused!important}
 .xfer{position:relative}
 .xfer__strip{display:flex;flex-direction:column;position:relative}
 .xfer__p1{order:-1;position:relative}
@@ -2428,7 +2437,8 @@ mountLanyard(document.getElementById('lanyard'), {
     var on=p>=+layers.dataset.from&&p<=+layers.dataset.to; layers.classList.toggle('on',on);
     if(on){var idx=0;items.forEach(function(li,k){if(p>=+li.dataset.at)idx=k;});items.forEach(function(li,k){li.classList.toggle('cur',k===idx);glows[k].classList.toggle('cur',k===idx);lg[k].classList.toggle('cur',k===idx);});}else{items.forEach(function(li,k){glows[k].classList.remove('cur');lg[k].classList.remove('cur');});}
   }
-  function loop(){
+  var seqVis=true;if('IntersectionObserver' in window)new IntersectionObserver(function(e){seqVis=e[0].isIntersecting;},{rootMargin:'300px'}).observe(SEQ);
+  function loop(){ if(!seqVis){requestAnimationFrame(loop);return;}
     target=progress()*(TOTAL-1);
     cur+=(target-cur)*0.14; if(Math.abs(target-cur)<0.01)cur=target;
     draw(false); copy.classList.toggle('photo',cur>=191.5); captions(cur/(TOTAL-1)); bar.style.transform='scaleX('+(cur/(TOTAL-1))+')';
@@ -2736,5 +2746,12 @@ import * as THREE from './three.module.js';
   }
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target);}});},{threshold:.6});
   els.forEach(function(el){io.observe(el);});
+})();
+</script>
+<script>
+(function(){
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('offs',!e.isIntersecting);});},{rootMargin:'120px'});
+  document.querySelectorAll('section').forEach(function(s){io.observe(s);});
 })();
 </script>
