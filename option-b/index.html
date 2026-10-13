@@ -1107,7 +1107,7 @@ window.trolistPricing={calc:calc};
 
 <script type="module">
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+import * as THREE from './three.module.js';
 
 
 const CARD_SIZES = {
@@ -2505,7 +2505,7 @@ mountLanyard(document.getElementById('lanyard'), {
 })();
 </script>
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+import * as THREE from './three.module.js';
 (function(){
   const host=document.getElementById('gap2Stage'); if(!host) return;
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
