@@ -2419,7 +2419,8 @@ mountLanyard(document.getElementById('lanyard'), {
       im.src=src(i);imgs[i]=im;})(q++);}
   }
   window.addEventListener('resize',fit);
-  fit(); pump(); requestAnimationFrame(loop);
+  fit(); requestAnimationFrame(loop);
+  (function(){var go=function(){setTimeout(pump,400)};if(document.readyState==='complete')go();else window.addEventListener('load',go);})();
 })();
 </script>
 
