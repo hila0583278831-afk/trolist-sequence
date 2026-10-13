@@ -846,7 +846,7 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
 .pr__res li span{color:var(--pr-mut)}
 .pr__res b{font-family:'Tel Aviv Brutalist','Rubik',Arial,sans-serif;font-weight:700;font-size:clamp(18px,1.6vw,24px);white-space:nowrap;color:#fff}
 .pr__res li.strong b{color:var(--pr-vl)}
-.pr__ch{margin:22px 0 0;padding:18px 18px 16px;border-radius:16px;background:rgba(17,17,38,.55);border:1px solid var(--pr-line)}
+.pr__wide{margin-block-start:clamp(20px,2vw,32px)}.pr__wide .pr__ch{margin:0;padding:18px 18px 16px;border-radius:16px;background:rgba(17,17,38,.55);border:1px solid var(--pr-line)}
 .pr__ch figcaption{font-size:clamp(14px,1.05vw,16px);font-weight:500;color:#e5dffa;margin-block-end:14px}
 .pr__bar+.pr__bar{margin-block-start:14px}
 .pr__bh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;color:var(--pr-mut);margin-block-end:6px}
@@ -907,16 +907,15 @@ try{new IntersectionObserver(function(es){if(!es[0].isIntersecting&&!v.paused)v.
           <li><span>עלות תגי RFID שנתית</span><b id="prTag">—</b></li>
           <li><span>עלות כוללת משוערת בשנה הראשונה</span><b id="prTot">—</b></li>
         </ul>
-        <figure class="pr__ch" id="prCh">
+      </div>
+    </div>
+    <div class="pr__wide"><figure class="pr__ch" id="prCh">
           <figcaption>ערך תפעולי מול עלות בשנה הראשונה</figcaption>
           <div class="pr__bar"><div class="pr__bh"><span>ערך תפעולי שנתי משוער</span><b id="chVn">—</b></div><div class="pr__bt"><i class="v" id="chV"></i></div></div>
           <div class="pr__bar"><div class="pr__bh"><span>עלות כוללת משוערת בשנה הראשונה</span><b id="chTn">—</b></div><div class="pr__bt"><i class="s" id="chS"></i><i class="l" id="chL"></i><i class="t" id="chT"></i></div></div>
           <ul class="pr__lg"><li><i style="background:#4fd1c5"></i>הקמה חד-פעמית <span id="lgS"></span></li><li><i style="background:#f5b85c"></i>דמי עלות שנתיים <span id="lgL"></span></li><li><i style="background:#ff8a7a"></i>תגי RFID <span id="lgT"></span></li></ul>
         </figure>
-        <div class="pr__gap"><span>פער משוער בין הערך התפעולי לעלות בשנה הראשונה</span><b id="prGap">—</b><em>הנתון הוא הערכה מבוססת מודל, לא תוצאה שנמדדה או מובטחת. העלות כוללת הקמה חד-פעמית של ₪25,000.</em></div>
-      </div>
-    </div>
-    <div class="pr__st pr__panel"><h4>המאזן המצטבר לאורך השנה</h4><p id="stSub"></p><div class="pr__sv" id="stV"><svg id="stSvg" viewBox="0 0 1200 320" role="img" aria-label="גרף מאזן מצטבר"></svg><div class="tip" id="stTip"></div></div></div><div class="pr__cta">
+        <div class="pr__gap"><span>פער משוער בין הערך התפעולי לעלות בשנה הראשונה</span><b id="prGap">—</b><em>הנתון הוא הערכה מבוססת מודל, לא תוצאה שנמדדה או מובטחת. העלות כוללת הקמה חד-פעמית של ₪25,000.</em></div></div><div class="pr__st pr__panel"><h4>המאזן המצטבר לאורך השנה</h4><p id="stSub"></p><div class="pr__sv" id="stV"><svg id="stSvg" viewBox="0 0 1200 320" role="img" aria-label="גרף מאזן מצטבר"></svg><div class="tip" id="stTip"></div></div></div><div class="pr__cta">
       <div><h3>התעניינו בפיילוט?</h3><p>בואו נבחן יחד אם TrolList מתאים לתהליכי העבודה ולקיבולת הכבודה אצלכם.</p></div>
       <!-- CTA: no contact section/route exists yet. Connect by turning this into <a href="#contact"> (or a mailto/route) once a destination exists. -->
       <button class="pr__btn" type="button" data-cta="pilot">בואו נדבר על פיילוט</button>
