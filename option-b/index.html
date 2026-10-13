@@ -785,7 +785,8 @@ setText(0);setTab(0);
 <!--film:end-->
 <!--demo:start-->
 <style id="dm-css">
-.dm{position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(56px,6vw,96px) max(20px,6vw) 0;background:radial-gradient(46% 50% at 50% 30%,rgba(138,98,245,.2),transparent 72%),radial-gradient(46% 400px at 82% calc(100% + 80px),rgba(138,98,245,.2),transparent 70%),#111126}
+.dm::after{content:"";position:absolute;inset-inline:0;bottom:0;height:clamp(150px,15vw,230px);background:linear-gradient(180deg,rgba(17,17,38,0) 0,#2a2360 28%,#8f7bdc 58%,#e4dcfb 82%,#fff 100%);pointer-events:none;z-index:0}
+.dm{position:relative;direction:rtl;overflow:hidden;isolation:isolate;padding:clamp(56px,6vw,96px) max(20px,6vw) clamp(150px,15vw,230px);background:radial-gradient(46% 50% at 50% 30%,rgba(138,98,245,.2),transparent 72%),radial-gradient(46% 400px at 82% calc(100% + 80px),rgba(138,98,245,.2),transparent 70%),#111126}
 .dm__in{max-inline-size:1120px;margin-inline:auto}
 .dm__fr{position:relative;border-radius:clamp(16px,2vw,26px);padding:clamp(6px,.8vw,10px);background:linear-gradient(160deg,rgba(169,139,255,.22),rgba(169,139,255,.06));border:1px solid rgba(169,139,255,.32);box-shadow:0 40px 90px -36px rgba(111,75,224,.6),0 0 0 1px rgba(17,17,38,.6) inset}
 .dm__v{position:relative;overflow:hidden;border-radius:clamp(11px,1.4vw,18px);background:#0a0a22;aspect-ratio:16/9}
