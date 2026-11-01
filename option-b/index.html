@@ -919,12 +919,20 @@ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInter
 .dm__pl svg{inline-size:34%;block-size:34%;fill:#b79cff;margin-inline-start:6%}
 .dm.is-on .dm__pl{opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.dm__pl span{transition:none}}
+.dm__tr{max-inline-size:900px;margin:18px auto 0;padding:0 clamp(16px,4vw,32px);color:#d9d3f3;font-family:var(--font-hebrew,Arial,sans-serif);font-size:15px;line-height:1.65}.dm__tr summary{cursor:pointer;display:inline-block;padding:10px 4px;font-weight:600;color:#fff}.dm__tr summary:focus-visible{outline:2px solid #b79cff;outline-offset:3px;border-radius:6px}.dm__tr p,.dm__tr li{margin:0 0 8px}.dm__tr ol{margin:8px 0 0;padding:0 20px 0 0}
 </style>
 <section class="dm" id="demo" dir="rtl" lang="he" aria-label="סרטון הדגמה">
   <div class="dm__in"><div class="dm__fr"><div class="dm__v">
-    <video id="dmVid" preload="metadata" playsinline poster="media/demo-poster.jpg" aria-label="סרטון הדגמה של TrolList"><source src="media/demo.mp4" type="video/mp4"></video>
+    <video id="dmVid" preload="metadata" playsinline poster="media/demo-poster.jpg" aria-label="סרטון הדגמה של TrolList"><source src="media/demo.mp4" type="video/mp4"><track kind="captions" srclang="he" label="תמלול הסרטון" src="media/demo.he.vtt"></video>
     <button class="dm__pl" id="dmPl" type="button" aria-label="הפעלת הסרטון"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span></button>
   </div></div></div>
+  <details class="dm__tr"><summary>תמלול ותיאור הסרטון</summary><p>הסרטון אינו כולל קול. הכתוביות מופיעות על המסך, וההדגמה להמחשה בלבד.</p><ol>
+<li>היום מגלים שהתא מלא רק כשהנוסעים כבר על המטוס. התא העליון מתמלא בטרולים ומופיעה ההודעה "התא מלא. אין מקום".</li>
+<li>בעמדת הצ'ק־אין מצמידים מדבקה חכמה לכל טרולי. החיישן קורא אותה ורושם: טרולי אחד.</li>
+<li>כל טרולי נספר אוטומטית, בלי רישום ידני. הנתון עובר למערכת בזמן אמת ומושווה לקיבולת שהוגדרה לדגם המטוס.</li>
+<li>המערכת מתריעה לצוות כבר בעמדה, לפני הגייט: מעל הקיבולת ב-12 טרולים. ההמלצה היא להציע לנוסעים להעביר טרולי לבטן המטוס. איש הצוות מאשר את ההמלצה, ו-12 טרולים עוברים לבטן המטוס.</li>
+<li>בגייט הקורא סופר שוב ומאמת את מה שתוכנן. העלייה רציפה, והתאים העליונים אינם עולים על גדותיהם.</li>
+<li>מסך סיום: הצעת פיילוט לרשות שדות התעופה. TROLIST, מיזם בפיתוח, מודיעין תפעולי מוקדם לניהול כבודת יד.</li></ol></details>
 </section>
 <script>
 (function(){var s=document.getElementById('demo'),v=document.getElementById('dmVid'),b=document.getElementById('dmPl');if(!s||!v||!b)return;
